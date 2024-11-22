@@ -1,8 +1,6 @@
-from calendar import c
 from random import * #*-kõik funktisoonid, randint as rd funktisoonide ümbernimetus
 #import random -> random.randint()
-from math import *
-from tkinter import YES
+from math import *  #from math import pi
 
 #Ülesanne 1
 # print("Hello world!")
@@ -29,7 +27,7 @@ from tkinter import YES
 # kas_käib_koolis = "Ei"
 # print("kas_käib_koolis: ",type(kas_käib_koolis))
 
-#Ülesanne 3
+# #Ülesanne 3
 # kokku=randint(1,1000)
 # print(f"Kokku on {kokku} kommi")
 # kommi=int(input("Mitu kommi sa tahad? "))
@@ -37,7 +35,7 @@ from tkinter import YES
 # print(f"Jääk on {kokku} kommi")
 
 
-#Ülesanne 4
+# #Ülesanne 4
 # print("Lääbimõõdu leidmine!")
 # #C-ümbermõõt
 # C=float(input("Ümbermööt: "))
