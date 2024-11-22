@@ -110,4 +110,4 @@ jootraha=12.90*0.1
 summa=jootraha+12.90
 #summa-kui palju peab igaüks maksma
 summa=round(summa/2,2)
-print(f"Mina maksan: {summa} eur \nMinu sõber P maksab: {summa} eur" )
+print(f"Mina maksan: {summa} eur \nMinu sõber P maksab: {summa} eur")
