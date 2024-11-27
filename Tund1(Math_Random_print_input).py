@@ -92,7 +92,7 @@ print(f"Kolmnurga ümbermõõt on {P}")
 
 
 #Ülesanne 10
-print("Tellisime koos sõbrannaga P suure pitsa.\nKokku summa on 12,90 eur ja 10% jootraha teenindajale.\nArvutame, kui palju peab igaüks maksma!\n")
+print("\тTellisime koos sõbrannaga P suure pitsa.\nKokku summa on 12,90 eur ja 10% jootraha teenindajale.\nArvutame, kui palju peab igaüks maksma!\n")
 jootraha=12.90*0.1
 #summa-pitsa hind + 10% jootraha
 summa=jootraha+12.90
