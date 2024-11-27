@@ -2,7 +2,6 @@
 from calendar import *
 from math import *
 from random import *
-from sys import excepthook
 
 
 # #Ülesanne 1
