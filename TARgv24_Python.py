@@ -2,14 +2,17 @@ from random import * #*-kõik funktisoonid, randint as rd funktisoonide ümberni
 #import random -> random.randint()
 from math import *  #from math import pi
 
-#Ülesanne 1
+# #Ülesanne 1
 # print("Hello world!")
 # nimi=input("Mis on sinu nimi? ").capitalize() #lower()-aaa, upper()-AAA, capitalize()-Aaa
 # print("Tere tulemast! Tervitan sind ", nimi)
 # print("Tere tulemst! Tervitan sind "+ nimi)
-# vanus=int(input("Kui vana sa oled? "))
-# print("Tere, maailm! Tervitan sind "+nimi+"! Sa oled ",vanus," aastat vana.")
-# print(f"\tTere, maailm! \nTervitan sind {nimi}! Sa oled {vanus} aastat vana.")
+# try:
+#     vanus=int(input("Kui vana sa oled? "))
+#     print("Tere, maailm! Tervitan sind "+nimi+"! Sa oled ",vanus," aastat vana.")
+#     print(f"\tTere, maailm! \nTervitan sind {nimi}! Sa oled {vanus} aastat vana.")
+# except:
+#     print("On vaja numbreid sisestada!")
 
 
 # #Ülesanne 2
@@ -74,31 +77,18 @@ print(f"Nende viie arvu aritmeetiline keskmine on: {arit_keskmine}")
 
 
 #Ülesanne 8
-print("\tIlus konn!\n")
 print('\t  @..@\n\t (----)\n\t( \__/ )\n\t^^ "" ^^')
 
 
 #Ülesanne 9 (1 variant)
 print("\t  Leiame kolmnurga ümbermõõdu!\n\tOn vaja teada 3 kolmnurga külge!\n")
 #a-esimene külg, b-teine külg, c-kolmas külg
-a=int(input("Kui suur on esimene külg? "))
-b=int(input("Kui suur on teine külg? "))
-c=int(input("Kui suur on kolmas külg? "))
+a=float(input("Kui suur on esimene külg? "))
+b=float(input("Kui suur on teine külg? "))
+c=float(input("Kui suur on kolmas külg? "))
 #P-kolmnurga ümbermõõt
 P=a+b+c
 print(f"Kolmnurga ümbermõõt on {P}")
-
-
-#Ülesanne 9 (2 variant)
-print("Leiame kolmnurga ümbermõõdu!\n\nOn antud kolm külge:")
-#a-esimene külg, b-teine külg, c-kolmas külg
-a=randint(1,100)
-b=randint(1,100)
-c=randint(1,(a+b)-1)  #3-я сторона треугольника должна быть меньше суммы других двух сторон
-print(f"a={a}\nb={b}\nc={c}")
-#P-kolmnurga ümbermõõt
-P=a+b+c
-print(f"Kolmnurga ümbermõõt on {P}!")
 
 
 #Ülesanne 10
