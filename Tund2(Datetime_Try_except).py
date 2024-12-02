@@ -83,18 +83,31 @@ a="kill-koll ".capitalize()
 b="killadi-koll ".capitalize()
 c=a*2+b 
 print(c*2,a*4)
+print()
 
-
-#Ülesanne 6
-laul="\nRong see sõitis tsuhh tsuhh tsuhh,\npiilupart oli rongijuht.\nRattad tegid rat tat taa,\nrat tat taa ja tat tat taa.\nAga seal rongi peal,\nkas sa tead, kes olid seal?\n\nRong see sõitis tuut tuut tuut,\npiilupart oli rongijuht.\nRattad tegid kill koll koll,\nkill koll koll ja kill koll kill.".upper()   
+#Ülesanne 6 - 1 variant
+laul="Rong see sõitis tsuhh tsuhh tsuhh,\npiilupart oli rongijuht.\nRattad tegid rat tat taa,\nrat tat taa ja tat tat taa.\nAga seal rongi peal,\nkas sa tead, kes olid seal?\n\nRong see sõitis tuut tuut tuut,\npiilupart oli rongijuht.\nRattad tegid kill koll koll,\nkill koll koll ja kill koll kill.".upper()   
 print(laul)
-#Изменила песню используя .upper()
-#Можно записать песню используя """ в начале и в конце, либо \n
+print()
+print()
+#Ülesanne 6 - 2 variant
+laul="""Rong see sõitis tsuhh tsuhh tsuhh,
+piilupart oli rongijuht.
+Rattad tegid rat tat taa,
+rat tat taa ja tat tat taa.
+Aga seal rongi peal,
+kas sa tead, kes olid seal?
 
+Rong see sõitis tuut tuut tuut,
+piilupart oli rongijuht.
+Rattad tegid kill koll koll,
+kill koll koll ja kill koll kill."""
+print(laul.upper())
+print()
 
 #Ülesanne 7
 try:
-    print("\n\tLeiame ristküliku ümbermõõdu ja pindala!")
+    print("Leiame ristküliku ümbermõõdu ja pindala!")
     pikkus=float(input("Sisetage ristküliku pikkus: "))
     laius=float(input("Sisestage ristküliku laius: "))
     P=round(2*(pikkus+laius),2) #P-периметр
@@ -103,11 +116,11 @@ try:
 
 except:
     print("Sisestage arv!")
-
+print()
 
 #Ülesanne 8
 try:
-    print("\n\tKütusekulu arvutamine!")
+    print("Kütusekulu arvutamine!")
     l=float(input("Sisestage, kui palju kütuse liitreid oli tangitud: "))  #l-количество литров топлива было заправлено
     s=float(input("Sisestage läbitud kilomeetrid: "))  #s-количество пройденных километров
     kütusekulu=round((l/s)*100,2)
@@ -115,22 +128,22 @@ try:
 
 except:
     print("Sisestage arv!")
-
+print()
 
 #Ülesanne 9
 try: 
-    print("\n\tRulluisutajad\nRulluisutaja keskmine kiirus on 29,9 km/t")
+    print("Rulluisutajad\nRulluisutaja keskmine kiirus on 29,9 km/t")
     minut=float(input("Sisestage minutid: "))
     S=round((29.9*(minut/60)),2)  #minut перевела в часы и нашла расстояние
     print(f"Rulluisutaja jõuab {S} km {round(minut,2)} minutiga")
 
 except:
     print("Sisestage arv!")
-
+print()
 
 #Ülesanne 10
 try:
-    print("\n\tAjateisendus")
+    print("Ajateisendus")
     aeg=float(input("Sisestage aja minutites: "))
     tunnid=int(aeg/60)   #целые часы
     minutid=int(aeg-tunnid*60)  #остаток минут
