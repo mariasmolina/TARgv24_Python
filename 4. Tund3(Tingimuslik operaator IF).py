@@ -277,8 +277,6 @@ from datetime import *
 try:
     inimesed=int(input("Kui palju inimesi sõidab bussiga? "))
     bussi_istme=int(input("Mitu istekohta on bussis? "))
-    bussi_arv=inimesed/bussi_istme
-    if inimesed/bussi_istme==0:
-        print("")
+   
 except:
     print("Vale andmetüüp!")
