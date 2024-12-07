@@ -164,4 +164,3 @@ elif vastus=="EI":
 else:
     print("Viga! Sisestage 'jah' või 'ei'!")
 print()
-wadwad
