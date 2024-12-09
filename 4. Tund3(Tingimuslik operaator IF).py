@@ -242,7 +242,7 @@ print("-- Ülesanne 10 --")
 try:
     arv1=round(float(input("Sisestage esimene arv: ")),2)
     arv2=round(float(input("Sisestage teine arv: ")),2)
-    tehe=input("Mis tehet te soovite?(+-*/)? ")
+    tehe=input("Mis tehet te soovite (+-*/)? ")
     if tehe=="+":
         tulemus=round(arv1+arv2,2)
         print(f"Liitmine: {arv1:g}+{arv2:g}={tulemus:g}")
