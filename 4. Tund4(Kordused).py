@@ -105,7 +105,7 @@ for i in range(10,100-1):
     for j in range(10,100-1):
         print(i, end=", ")
 print()
-
+print()
 
 
 #Ülesanne 
