@@ -103,7 +103,6 @@ print()
 print("--Ülesanne 26--")
 for i in range(10,100-1):
     for j in range(10,100-1):
-    if i%a==0:
         print(i, end=", ")
 print()
 
