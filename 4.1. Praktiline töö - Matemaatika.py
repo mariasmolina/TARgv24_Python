@@ -41,7 +41,7 @@ while True:
             num2=randint(1,50)
             op=choice(["+","-","*","/","**"])
 
-    # Вычисляет правильный ответ
+        # Вычисляет правильный ответ, учитывая все операции "+","-","*","/","**"
         if op=="+":
             õige_vastus=num1+num2
         elif op=="-":
@@ -49,20 +49,20 @@ while True:
         elif op=="*":
             õige_vastus=num1*num2
         elif op == "/":
-            num2=randint(1,10)  # Генерирует делитель   
+            num2=randint(1,10)          # Генерирует делитель   
             num1=num2*randint(1,10)     # Генерирует число, кратное делителю
             õige_vastus=round(num1/num2,2)
         elif op=="**":
-            num2=randint(2,3)
+            num2=randint(2,3)       # Так как тест решается не на калькуляторе, то сделала возведение в степень проще, чтобы можно было посчитать в уме
             õige_vastus=num1**num2
 
-        # Тест
+        # Прохождение теста и запись ответа
         print(f"{i}. Kuidas lahendada {num1} {op} {num2}?")
         while True:
             try:
                 vastus=float(input("Teie vastus: "))
 
-            # Проверка ответа
+                # Проверка ответа
                 if vastus==õige_vastus:
                     print("Õige!\n")
                     õiged_vastused+=1
@@ -73,6 +73,10 @@ while True:
                 print("Sisestage arv!")
 
     # Оценка
+    # <60% - Hinne 2
+    # 60-75% - Hinne 3
+    # 75-90% - Hinne 4
+    # >90% - Hinne 5
     hinne=(õiged_vastused/max_küsimusi)*100
     print(f"\nTe vastasite õigesti {õiged_vastused} küsimusele {max_küsimusi}st.")
 
@@ -85,8 +89,8 @@ while True:
     else:
         print("Teie hinne on: 5")
 
-# Спрашивает, хочет ли пользователь пройти тест ещё раз
-    while True:     # Проверка, если вдруг напишут что то, кроме да и нет
+    # Программа спрашивает, хочет ли пользователь пройти тест ещё раз
+    while True:     # Проверка, если вдруг напишут что то, кроме да или нет
         uuesti = input("\nKas soovite uuesti proovida? (jah/ei): ").lower()
         print()
         if uuesti == "jah" or uuesti == "ei":
