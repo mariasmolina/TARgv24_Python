@@ -14,7 +14,7 @@ while True:
     while True:
         try:
             tase=int(input("Sisestage raskusaste (1, 2, 3): "))
-            if tase!=1 and tase!=2 and tase !=3:
+            if tase!=1 and tase!=2 and tase!=3:
                 print("Palun valige tase 1, 2 või 3!")
             else:
                 break  # Если все верно, выйти из цикла
