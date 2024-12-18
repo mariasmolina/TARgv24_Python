@@ -5,7 +5,7 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>4.2. Töö - Vigade otsing -2 (Sirakus).py</StartupFile>
+    <StartupFile>4.3. Plokkskeemid.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -30,6 +30,7 @@
     <Compile Include="4. Tund4%28Kordused%29.py" />
     <Compile Include="4.1. Praktiline töö - Matemaatika.py" />
     <Compile Include="4.2. Töö - Vigade otsing -2 %28Sirakus%29.py" />
+    <Compile Include="4.3. Plokkskeemid.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
