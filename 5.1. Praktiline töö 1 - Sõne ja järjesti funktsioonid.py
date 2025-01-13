@@ -121,7 +121,7 @@ while True:
 
     if valik==12:
         print(f"Список фамилий: {', '.join(perenimed)}")
-        sa
+
 
 
 
