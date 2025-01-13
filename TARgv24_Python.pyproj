@@ -5,7 +5,8 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>5.1. Praktiline töö 1 - Sõne ja järjesti funktsioonid.py</StartupFile>
+    <StartupFile>
+    </StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -32,7 +33,7 @@
     <Compile Include="4.2. Töö - Vigade otsing -2 %28Sirakus%29.py" />
     <Compile Include="4.3. Plokkskeemid.py" />
     <Compile Include="4.4. Kodutöö IF,While, For %288.01.2025%29.py" />
-    <Compile Include="5. Tund5 %28List, str%29.py" />
+    <Compile Include="5. Tund5 %28List funktsioonid%29.py" />
     <Compile Include="5.1. Praktiline töö 1 - Sõne ja järjesti funktsioonid.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
