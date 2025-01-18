@@ -92,7 +92,7 @@ while True:
             arvud.append(ikood)
             continue
 
-        # Определение пола (1,3,5 -муж, 2,4,6-жен)
+        # Определение пола (1,3,5 - муж, 2,4,6 - жен)
         if esimene_arv in {1,3,5}:
             sugu="mees"
         else:
