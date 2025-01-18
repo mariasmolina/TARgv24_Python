@@ -9,12 +9,12 @@
 import string
 vokaali=["a","e","u","o","i","ü","ö","õ","ä"]
 konsonanti="qwrtpsdfghklzxcvbnm"
-markid=string.punctuation # %&'()*+,-./:;<=>?@[\]^_`{|}~
+markid=string.punctuation # %&'()*+,-./:;<=>?@[\]^_`{|}~     #string.punctuation - содержит все символы пунктуации
 
 while True:
-    v=k=m=t=0
+    v=k=m=t=0    #v - vokaal, k - konsolant, m - markid, t - tühikud
     tekst=input("Sisesta mingi tekst: ").lower()
-    if tekst.isdigit():
+    if tekst.isdigit():    # если ввел только цифры, программа завершается
         break
     else:
         tekst_list=list(tekst)
