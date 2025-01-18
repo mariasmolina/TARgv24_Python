@@ -1,5 +1,6 @@
 # Praktiline töö 2: "Listid" (https://moodle.edu.ee/mod/assign/view.php?id=1449749)
 
+
 # Ülesanded:
 
 # Ülesanne 1. Sõna/Lause
