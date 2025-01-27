@@ -9,7 +9,10 @@ arvud=[]   # Список неправильных личных кодов
 # Бесконечно запрашиваем личные коды
 while True:
     try:
-        ikood=input("Sisestage isikukood: ")
+        ikood=input("\nSisestage isikukood (või sisestage 'X' lõpetamiseks): ")
+
+        if ikood.lower()=="x":  # Проверка команды выхода
+            break
 
         # Проверка на количество символов
         if len(ikood)!=11:   
@@ -81,7 +84,7 @@ while True:
             [571,600,"Valga Haigla"],
             [601,650,"Viljandi Haigla"],
             [651,700,"Lõuna-Eesti Haigla (Võru), Põlva Haigla"]
-            ]
+        ]
 
         for alg,lopp,koht in haiglad:    # задаю цикл, перебирающий все элементы в haiglad
             if alg<=sunnikoht_num<=lopp:  # условие, есть ли номер места рождения между первым и вторым элементом
@@ -99,28 +102,24 @@ while True:
             sugu="naine"
 
         # Вывод на экран результата
-        print(f"See on {sugu}, tema sünnipäev on {sunniaeg} ja sünnikoht on {sunnikoht}.")
+        print(f"See on {sugu}, tema sünnipäev on {sunniaeg}.\nSünnikoht on {sunnikoht}.")
         ikoodid.append(ikood)
-
-
-        # Сортировка списков
-        arvud.sort() # Упорядочила по-возростанию
-
-        # разделила списки по полу 
-
-        # перебирает все элементы из списка ikoodid и создает список из женских исикукодов, которые начинаются на 2,4,6
-        ikoodid_naised=[ikood for ikood in ikoodid if int(ikood[0]) in {2,4,6}]
-        # перебирает все элементы из списка ikoodid и создает список из мужских исикукодов, которые начинаются на 1,3,5
-        ikoodid_mehed=[ikood for ikood in ikoodid if int(ikood[0]) in {1,3,5}]
-
-        # соединила списки, в начало поставила искикукоды женщин, потом мужчин
-        ikoodid=ikoodid_naised+ikoodid_mehed
-  
-        # Вывод на экран обоих списков
-        print(f"\nÕiged isikukoodid: {ikoodid}")
-        print(f"\nVigased isikukoodid: {arvud}")
-        print()
 
     except:
         print("Sisestage isikukood!")
+
+# Сортировка списков
+arvud.sort() # Упорядочила по-возростанию
+
+# перебирает все элементы из списка ikoodid и создает список из женских исикукодов, которые начинаются на 2,4,6
+ikoodid_naised=[ikood for ikood in ikoodid if int(ikood[0]) in {2,4,6}]
+# перебирает все элементы из списка ikoodid и создает список из мужских исикукодов, которые начинаются на 1,3,5
+ikoodid_mehed=[ikood for ikood in ikoodid if int(ikood[0]) in {1,3,5}]
+# соединила списки, в начало поставила искикукоды женщин, потом мужчин
+ikoodid=ikoodid_naised+ikoodid_mehed
+
+# Вывод на экран обоих списков
+print(f"\nÕiged isikukoodid: {ikoodid}")
+print(f"\nVigased isikukoodid: {arvud}")
+print()
     

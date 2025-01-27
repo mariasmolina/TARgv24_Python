@@ -5,7 +5,7 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>6. Tund 6 (Def)\6. Tund6 (Def).py</StartupFile>
+    <StartupFile>6. Tund 6 (Def)\6.1. Kodutöö - Isikukood.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -37,6 +37,8 @@
     <Compile Include="5. Tund 5 %28Järjend_List%29\5.2. Praktiline töö 2 - Listid.py" />
     <Compile Include="5. Tund 5 %28Järjend_List%29\5.3. Kodutöö - Isikukood.py" />
     <Compile Include="6. Tund 6 %28Def%29\6. Tund6 %28Def%29.py" />
+    <Compile Include="6. Tund 6 %28Def%29\6.1. Kodutöö - Isikukood.py" />
+    <Compile Include="6. Tund 6 %28Def%29\Isikukood_Modul.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="6. Tund 6 %28Def%29\Tund6_Modul.py" />
