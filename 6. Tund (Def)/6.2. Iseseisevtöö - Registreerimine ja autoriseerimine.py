@@ -2,4 +2,5 @@
 
 # Programm, mis simuleerib kasutajate registreerimist ja autoriseerimist mingis süsteemis.
 
+
 from MyModule import *   # funktsioonid eraldi moodulis MyModule.py
