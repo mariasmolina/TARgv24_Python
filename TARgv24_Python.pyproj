@@ -40,6 +40,7 @@
     <Compile Include="6. Tund 6 %28Def%29\6.1. Kodutöö - Isikukood.py" />
     <Compile Include="6. Tund 6 %28Def%29\6.2. Iseseisevtöö - Registreerimine ja autoriseerimine.py" />
     <Compile Include="6. Tund 6 %28Def%29\Isikukood_Modul.py" />
+    <Compile Include="6. Tund 6 %28Def%29\MyModule.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="6. Tund 6 %28Def%29\Tund6_Modul.py" />
