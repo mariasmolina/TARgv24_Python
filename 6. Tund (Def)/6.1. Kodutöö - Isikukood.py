@@ -1,6 +1,7 @@
 # Kodutöö "Isikukood" https://moodle.edu.ee/mod/assign/view.php?id=1713190
 
 
+
 from Isikukood_Modul import * 
 
 ikoodid=[]  # Список верно введенных личных кодов

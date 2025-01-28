@@ -100,7 +100,7 @@ def leia_sunnikoht(sunnikoht_num:int)->str:
     return "Tundmatu sünnikoht"
 
 
-# Определение пола (1,3,5 - муж, 2,4,6 - жен)
+# Определение пола (1,3,5 - муж; 2,4,6 - жен)
 def leia_sugu(ikood:int)->str:
     """Määrab isiku soo
     :param int esimene_arv: Isikukoodi esimene number
