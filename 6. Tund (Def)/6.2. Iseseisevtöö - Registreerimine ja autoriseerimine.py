@@ -4,66 +4,49 @@
 
 
 from MyModule import *   # funktsioonid eraldi moodulis MyModule.py
-import random
 
-sisselogimised = []   # Список логинов
-paroolid = []         # Список паролей
 
 while True:
-    print("\n--- Tere tulemast meie süsteemi! ---\n\n Siin te saate valida tegevus:\n1. Registreerimine\n2. Automatiseerimine\n3. Nime või parooli muutmine\n4. Unustanud parooli taastamine\n5. Lõpetamine")
-    valik=input("\nSisestage valik (number või tegevus): ").lower()
+    print("\n------------------------------------")
+    print("\n--- Tere tulemast meie süsteemi! ---\n1 - Registreerimine\n2 - Automatiseerimine\n3 - Kasutajanime või parooli muutmine\n4 - Unustanud parooli taastamine\n5 - Lõpetamine")
+    valik=input("\nSisestage valik (number): ").lower()
+
 
     # 1. Регистрация
-    if valik=="registreerimine" or valik=="1":
-        uus_nimi=input("Sisestage uus kasutajanimi: ")
-        if uus_nimi in sisselogimised:  # Проверяем, зарегестрировано ли уже имя
-            print("Selline kasutaja on juba olemas!")
-        sisselogimised.append(uus_nimi) 
-        print("\nParooli loomine! Teil on kaks võimalust:\n1. Automaatne parooli genereerimine\n2. Looge parool ise")
+    if valik=="1":
+        print("\n--- Registreerimine ---\n")
+        registreeri_kasutaja()
 
-        while True:
-            valik_parool=input("\nValige tegevus (number 1 või 2): ")
-            if valik_parool=="1":
-                # Первый вариант кода из задания в moodle (так как создает более надежный пароль)
-                str0=".,:;!_*-+()/#¤%&"
-                str1 = '0123456789'
-                str2 = 'qwertyuiopasdfghjklzxcvbnm'
-                str3 = str2.upper()
-                str4 = str0+str1+str2+str3
-                ls = list(str4)
-                random.shuffle(ls)
-                # Извлекаем из списка 12 произвольных значений
-                psword = ''.join([random.choice(ls) for x in range(12)])
-                # Пароль готов
-                print(f"Teie uus parool on: {psword}")
-                paroolid.append(psword)
 
-            elif valik_parool=="2":
-                while True:
-                    psword=input("Sisestage uus parool: ")
-                    if not parool_kontroll(psword):
-                        print("Sisestage turvalisem parool!")
-                    else:
-                        print(f"Teie uus parool on: {psword}")
-                        break
-                        paroolid.append(psword)
-                break
-            else:
-                print("Valige tegevuse number 1 või 2!")
-
-    # 2. 
+    # 2. Авторизация
     elif valik=="autoriseerimine" or valik=="2":
-        print("")
+        print("\n--- Automatiseerimine ---\n")
+        vana_login=sisesta_login(sisselogimised)
+        vana_parool=sisesta_parool(sisselogimised,paroolid,vana_login)
+
+        print("\nAutoriseerimine õnnestus!")
 
 
     # 3. Смена логина или пароля
-    elif valik=="nime või parooli muutmine" or valik=="3":
-        print("")
+    elif valik=="kasutajanime või parooli muutmine" or valik=="3":
+        print("\n--- Kasutajanime või parooli muutmine ---\n")
+        muuda_kasutaja_andmeid()
 
 
     # 4. Восстановление забытого пароля
     elif valik=="unustanud parooli taastamine" or valik=="4":
-        print("")
+        print("\n--- Unustanud parooli taastamine ---\n")
+        while True:
+            vana_login=input("Sisestage kasutajanimi: ")
+            if vana_login not in sisselogimised:
+                print("Kasutajanimi ei leitud. Proovige uuesti!")
+            else:
+                index_parool=sisselogimised.index(vana_login)
+                uus_parool=genereeri_parool()    # Генерируем новый пароль
+                paroolid.pop(index_parool)  # Удаляем старый пароль
+                paroolid.insert(index_parool,uus_parool)  # Вставляем новый на то же место
+                print(f"\nTeie uus parool on: {uus_parool}")
+                break
 
 
     # 5. Выход из программы
@@ -72,4 +55,6 @@ while True:
         break
     else:
         print("Valige tegevus või tegevuse number!")
+       
+
 
