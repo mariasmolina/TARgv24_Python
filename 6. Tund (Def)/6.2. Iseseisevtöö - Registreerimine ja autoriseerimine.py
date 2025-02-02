@@ -9,7 +9,7 @@ from MyModule import *   # funktsioonid eraldi moodulis MyModule.py
 while True:
     print("\n------------------------------------")
     print("\n--- Tere tulemast meie süsteemi! ---\n1 - Registreerimine\n2 - Automatiseerimine\n3 - Kasutajanime või parooli muutmine\n4 - Unustanud parooli taastamine\n5 - Lõpetamine")
-    valik=input("\nSisestage valik (number): ").lower()
+    valik=input("\nSisestage valik (number): ")
 
 
     # 1. Регистрация
@@ -19,7 +19,7 @@ while True:
 
 
     # 2. Авторизация
-    elif valik=="autoriseerimine" or valik=="2":
+    elif valik=="2":
         print("\n--- Automatiseerimine ---\n")
         vana_login=sisesta_login(sisselogimised)
         vana_parool=sisesta_parool(sisselogimised,paroolid,vana_login)
@@ -28,13 +28,13 @@ while True:
 
 
     # 3. Смена логина или пароля
-    elif valik=="kasutajanime või parooli muutmine" or valik=="3":
+    elif valik=="3":
         print("\n--- Kasutajanime või parooli muutmine ---\n")
         muuda_kasutaja_andmeid()
 
 
     # 4. Восстановление забытого пароля
-    elif valik=="unustanud parooli taastamine" or valik=="4":
+    elif valik=="4":
         print("\n--- Unustanud parooli taastamine ---\n")
         while True:
             vana_login=input("Sisestage kasutajanimi: ")
@@ -50,7 +50,7 @@ while True:
 
 
     # 5. Выход из программы
-    elif valik=="lõpetamine" or valik=="5":
+    elif valik=="5":
         print("\n--- Head aega! ---\nProgrammi lõpetamine...")
         break
     else:

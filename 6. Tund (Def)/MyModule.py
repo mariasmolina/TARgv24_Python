@@ -1,26 +1,25 @@
 ﻿# Iseseisevtöö "Registreerimine ja autoriseerimine" https://moodle.edu.ee/mod/assign/view.php?id=1102881
 
 import random
-import string
 
-sisselogimised = []  # Список логинов
-paroolid = []    # Список паролей
+sisselogimised=[]  # Список логинов
+paroolid=[]    # Список паролей
 
 
 # Проверка пароля
-def parool_kontroll(psword:any)->bool:
+def parool_kontroll(parool:any)->bool:
     """Parooli kontrollimine, kas see sisaldab: numbreid, suuri ja väikeseid tähti ning erimärke
     :param any psword: Sisestatud parool
     :rtype: bool Tagastab True, kui parool vastab kõikidele nõudmistele
     """
-    if not any(char.isdigit() for char in psword):  # Проверяем наличие цифр
+    if not any(char.isdigit() for char in parool):  # Проверяем наличие цифр
         return False
-    if not any(char.isupper() for char in psword):  # Проверяем наличие заглавных букв
+    if not any(char.isupper() for char in parool):  # Проверяем наличие заглавных букв
         return False
-    if not any(char.islower() for char in psword):  # Проверяем наличие строчных букв
+    if not any(char.islower() for char in parool):  # Проверяем наличие строчных букв
         return False
     spets_sumbolid=".,:;!_*-+()/#¤%&"   # Проверяем наличие хотя бы одного специального символа
-    if not any(char in spets_sumbolid for char in psword):
+    if not any(char in spets_sumbolid for char in parool):
         return False
 
     return True
@@ -33,15 +32,15 @@ def genereeri_parool(pikkus=12)-> any:
     :rtype: any: Tagastab genereeritud parooli
     """
     # Первый вариант кода из задания в moodle (так как создает более надежный пароль)
-    str0 = ".,:;!_*-+()/#¤%&"
-    str1 = '0123456789'
-    str2 = 'qwertyuiopasdfghjklzxcvbnm'
-    str3 = str2.upper()
-    str4 = str0+str1+str2+str3
-    ls = list(str4)
+    str0=".,:;!_*-+()/#¤%&"
+    str1='0123456789'
+    str2='qwertyuiopasdfghjklzxcvbnm'
+    str3=str2.upper()
+    str4=str0+str1+str2+str3
+    ls=list(str4)
     random.shuffle(ls)
     # Извлекаем из списка 12 произвольных значений
-    uus_parool = ''.join([random.choice(ls) for x in range(12)])
+    uus_parool=''.join([random.choice(ls) for x in range(12)])
     # Пароль готов
 
     return uus_parool
