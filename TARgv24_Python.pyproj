@@ -41,6 +41,8 @@
     <Compile Include="6. Tund %28Def%29\6.2. Iseseisevtöö - Registreerimine ja autoriseerimine.py" />
     <Compile Include="6. Tund %28Def%29\Isikukood_Modul.py" />
     <Compile Include="6. Tund %28Def%29\MyModule.py" />
+    <Compile Include="7. Tund %28Töö failidega%29\7. Tund %28Töö failidega%29.py" />
+    <Compile Include="7. Tund %28Töö failidega%29\7.1. Praktiline töö - Tarkvaraarendaja vastuvõtt.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="6. Tund %28Def%29\Tund6_Modul.py" />
@@ -52,6 +54,7 @@
     <Folder Include="4. Tund %28Kordused%29\" />
     <Folder Include="5. Tund %28Järjend_List%29\" />
     <Folder Include="6. Tund %28Def%29\" />
+    <Folder Include="7. Tund %28Töö failidega%29\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
