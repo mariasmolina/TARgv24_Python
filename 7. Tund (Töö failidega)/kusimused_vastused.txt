@@ -1,0 +1,5 @@
+Mis programmeerimiskeelt kirjutatakse ilma semikoolonita rea lõpus?:Python
+Millise käsu abil saab Git-is muudatusi kommitida?:git commit
+Kuidas nimetakse funktsioonid Pythonis?:def
+Millise käsu abil luuakse Git-i hoidla?:git init
+Milline käsk annab root õigused Linuxi käsureal?:sudo

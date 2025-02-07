@@ -5,7 +5,7 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>6. Tund (Def)\6.2. Iseseisevtöö - Registreerimine ja autoriseerimine.py</StartupFile>
+    <StartupFile>7. Tund (Töö failidega)\7.1. Praktiline töö - Tarkvaraarendaja vastuvõtt.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -43,6 +43,7 @@
     <Compile Include="6. Tund %28Def%29\MyModule.py" />
     <Compile Include="7. Tund %28Töö failidega%29\7. Tund %28Töö failidega%29.py" />
     <Compile Include="7. Tund %28Töö failidega%29\7.1. Praktiline töö - Tarkvaraarendaja vastuvõtt.py" />
+    <Compile Include="7. Tund %28Töö failidega%29\vastuvott_Module.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="6. Tund %28Def%29\Tund6_Modul.py" />
