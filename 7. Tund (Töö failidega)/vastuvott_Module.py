@@ -1,7 +1,6 @@
 import random
 
 
-
 # -- Словарь вопросов и ответов -- 
 
 def laadi_kusimused_vastused(failinimi:str)->list:

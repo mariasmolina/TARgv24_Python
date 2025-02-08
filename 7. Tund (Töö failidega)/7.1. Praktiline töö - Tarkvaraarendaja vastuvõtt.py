@@ -13,7 +13,7 @@ ebaõnnestunud=[]   # Отклоненные кандидаты (имя)
 
 
 # Опрашиваем кандидатов
-while len(vastuvõetud) < 5:
+while len(vastuvõetud)<5:
     nimi = input("\nTere tulemast tarkvaraarendaja vastuvõttule!\nMe küsime teie käest 5 küsimusi\nSisestage teie nimi: ")
     punktid=küsi_kandidaat(nimi,kus_vas)
 
