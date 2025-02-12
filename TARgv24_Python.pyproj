@@ -5,7 +5,7 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>7. Tund (Töö failidega)\7.1. Praktiline töö - Tarkvaraarendaja vastuvõtt.py</StartupFile>
+    <StartupFile>7. Tund (Töö failidega)\7.2. Tund (Töö failidega).py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -43,10 +43,13 @@
     <Compile Include="6. Tund %28Def%29\MyModule.py" />
     <Compile Include="7. Tund %28Töö failidega%29\7. Töö failidega - teooria.py" />
     <Compile Include="7. Tund %28Töö failidega%29\7.1. Praktiline töö - Tarkvaraarendaja vastuvõtt.py" />
+    <Compile Include="7. Tund %28Töö failidega%29\7.2. Tund %28Töö failidega%29.py" />
     <Compile Include="7. Tund %28Töö failidega%29\vastuvott_Module.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="6. Tund %28Def%29\Tund6_Modul.py" />
+    <Content Include="7. Tund %28Töö failidega%29\Kasutajad.txt" />
+    <Content Include="7. Tund %28Töö failidega%29\Salasõnad.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="1. Tund %28Math_Random_print_input%29\" />
