@@ -1,5 +1,5 @@
 from MinuOmaMoodul import *
-#C:/Users/marina.oleinik/source/repos/Aut_Reg/Salasõnad.txt
+
 salasõnad=loe_failist("7. Tund (Töö failidega)/Salasõnad.txt")
 kasutajanimed=loe_failist("7. Tund (Töö failidega)/Kasutajad.txt")
 while True:
@@ -33,16 +33,16 @@ while True:
             salasõnad=ümber_kirjuta_fail('7. Tund (Töö failidega)/Salasõnad.txt')
     elif vastus==4:
         print("Unustanud parooli taastamine")
-        # vana_login=input("Sisestage kasutajanimi: ")
-        # if vana_login not in kasutajanimed:
-        #     print("Kasutajanimi ei leitud. Proovige uuesti!")
-        # else:
-        #     index_parool=kasutajanimed.index(vana_login)
-        #     uus_parool=genereeri_parool()
-        #     salasõnad.pop(index_parool)  
-        #     salasõnad.insert(index_parool,uus_parool)
-        #     kirjuta_failisse('7. Tund (Töö failidega)/Kasutajad.txt',kasutajanimed)
-        #     kirjuta_failisse('7. Tund (Töö failidega)/Salasõnad.txt',salasõnad)
+        vana_login=input("Sisestage kasutajanimi: ")
+        if vana_login not in kasutajanimed:
+            print("Kasutajanimi ei leitud. Proovige uuesti!")
+        else:
+            index_parool=kasutajanimed.index(vana_login)
+            uus_parool=genereeri_parool()
+            salasõnad.pop(index_parool)  
+            salasõnad.insert(index_parool,uus_parool)
+            kirjuta_failisse('7. Tund (Töö failidega)/Kasutajad.txt',kasutajanimed)
+            kirjuta_failisse('7. Tund (Töö failidega)/Salasõnad.txt',salasõnad)
 
     elif vastus==5:
         print("Lõpetamine")
