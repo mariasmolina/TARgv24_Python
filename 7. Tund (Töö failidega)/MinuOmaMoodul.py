@@ -75,6 +75,7 @@ def autoriseerimine(kasutajad:list,paroolid:list):
                         for i in range(10):
                             sleep(1)
                             print(f"On jäänud {10-i} sek")
+            break
         else:
             print("Kasutajat pole")
 def nimi_või_parooli_muurmine(list_:list):
@@ -169,6 +170,30 @@ def saada_kiri():
     msg = EmailMessage()
     msg.set_content(kiri)
     msg['Subject'] = "E-kiri saatmine"  # from Entry
+    msg['From'] = "TARgv24 WEB"
+    msg['To'] = kellele
+
+    try:
+        server = smtplib.SMTP(smtp_server, port)
+        server.starttls(context=context)
+        server.login(sender_email, password)
+        server.send_message(msg)
+        print("Informatsioon: kiri oli saadetud")
+    except Exception as e:
+        print("Tekkis viga!", e)
+    finally:
+        server.quit()
+def saada_uus_parool(uus_parool):
+    kellele = input("Kellele: ")
+    kiri = (f"Teie uus parool: {uus_parool}")
+    smtp_server = "smtp.gmail.com"
+    port = 587
+    sender_email = "mariia.smolina@gmail.com"
+    password = "nnjs bfgj sltp rfac"
+    context = ssl.create_default_context()
+    msg = EmailMessage()
+    msg.set_content(kiri)
+    msg['Subject'] = "Unustanud parooli taastamine"  # from Entry
     msg['From'] = "TARgv24 WEB"
     msg['To'] = kellele
 

@@ -5,8 +5,8 @@ kasutajanimed=loe_failist("7. Tund (Töö failidega)/Kasutajad.txt")
 while True:
     print(kasutajanimed)
     print(salasõnad)
-    print("1-registreerimine\n2-autoriseerimine\n3-nime või parooli muutmine\n4-unustanud parooli taastamine\n5-lõpetamine\n")
-    vastus=int(input("Sisestage arv"))
+    print("\n1-registreerimine\n2-autoriseerimine\n3-nime või parooli muutmine\n4-unustanud parooli taastamine\n5-lõpetamine\n")
+    vastus=int(input("Sisestage arv: "))
     if vastus==1:
         print("Registreerimine")
         kasutajanimed,salasõnad=registreerimine(kasutajanimed,salasõnad)
@@ -43,6 +43,8 @@ while True:
             salasõnad.insert(index_parool,uus_parool)
             kirjuta_failisse('7. Tund (Töö failidega)/Kasutajad.txt',kasutajanimed)
             kirjuta_failisse('7. Tund (Töö failidega)/Salasõnad.txt',salasõnad)
+            print(f"Teie uus parool: {uus_parool}")
+            saada_uus_parool(uus_parool)   # отправляет новый пароль на почту
 
     elif vastus==5:
         print("Lõpetamine")
