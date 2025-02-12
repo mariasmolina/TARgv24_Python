@@ -5,7 +5,7 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>7. Tund (Töö failidega)\7.2. Aut_Reg.py</StartupFile>
+    <StartupFile>8. Tund (Sõnastikud)\8. Tund (Euroopa riigid).py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -43,15 +43,21 @@
     <Compile Include="6. Tund %28Def%29\MyModule.py" />
     <Compile Include="7. Tund %28Töö failidega%29\7. Töö failidega - teooria.py" />
     <Compile Include="7. Tund %28Töö failidega%29\7.1. Praktiline töö - Tarkvaraarendaja vastuvõtt.py" />
-    <Compile Include="7. Tund %28Töö failidega%29\7.3. Tund %28Töö failidega%29.py" />
     <Compile Include="7. Tund %28Töö failidega%29\7.2. Aut_Reg.py" />
     <Compile Include="7. Tund %28Töö failidega%29\MinuOmaMoodul.py" />
     <Compile Include="7. Tund %28Töö failidega%29\vastuvott_Module.py" />
+    <Compile Include="8. Tund %28Sõnastikud%29\8. Tund %28Euroopa riigid%29.py" />
+    <Compile Include="8. Tund %28Sõnastikud%29\Euroopa_Liigid_Module.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="6. Tund %28Def%29\Tund6_Modul.py" />
+    <Content Include="7. Tund %28Töö failidega%29\eisoobi.txt" />
+    <Content Include="7. Tund %28Töö failidega%29\heli.mp3" />
     <Content Include="7. Tund %28Töö failidega%29\Kasutajad.txt" />
+    <Content Include="7. Tund %28Töö failidega%29\kusimused_vastused.txt" />
     <Content Include="7. Tund %28Töö failidega%29\Salasõnad.txt" />
+    <Content Include="7. Tund %28Töö failidega%29\vastuvõetud.txt" />
+    <Content Include="8. Tund %28Sõnastikud%29\riigid_pealinnad.txt" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="1. Tund %28Math_Random_print_input%29\" />
@@ -61,6 +67,7 @@
     <Folder Include="5. Tund %28Järjend_List%29\" />
     <Folder Include="6. Tund %28Def%29\" />
     <Folder Include="7. Tund %28Töö failidega%29\" />
+    <Folder Include="8. Tund %28Sõnastikud%29\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
