@@ -52,12 +52,12 @@
   <ItemGroup>
     <Content Include="6. Tund %28Def%29\Tund6_Modul.py" />
     <Content Include="7. Tund %28Töö failidega%29\eisoobi.txt" />
-    <Content Include="7. Tund %28Töö failidega%29\heli.mp3" />
     <Content Include="7. Tund %28Töö failidega%29\Kasutajad.txt" />
     <Content Include="7. Tund %28Töö failidega%29\kusimused_vastused.txt" />
     <Content Include="7. Tund %28Töö failidega%29\Salasõnad.txt" />
     <Content Include="7. Tund %28Töö failidega%29\vastuvõetud.txt" />
     <Content Include="8. Tund %28Sõnastikud%29\riigid_pealinnad.txt" />
+    <Content Include="heli.mp3" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="1. Tund %28Math_Random_print_input%29\" />

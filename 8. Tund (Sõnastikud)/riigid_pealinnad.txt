@@ -1,4 +1,4 @@
-Albaania-Tirana
+﻿Albaania-Tirana
 Andorra-Andorra_la_Vella
 Armeenia-Jerevan
 Aserbaidžaan-Bakuu
@@ -39,12 +39,12 @@ Slovakkia-Bratislava
 Sloveenia-Ljubljana
 Soome-Helsingi
 Suurbritannia-London
-Šveits-Bern
 Taani-Kopenhaagen
-Tšehhi-Praha
 Türgi-Ankara
+Tšehhi-Praha
 Ukraina-Kiiev
 Ungari-Budapest
 Valgevene-Minsk
 Vatikan-Vatican
 Venemaa-Moskva
+Šveits-Bern
