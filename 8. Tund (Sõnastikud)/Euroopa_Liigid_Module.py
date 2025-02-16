@@ -43,50 +43,51 @@ def fail_dict_uuendamine(k:any, v:any, fail: str, sõnastik: dict)->dict:
 
     return sõnastik
 
-# def leia_linn_pealinn(sõnastik:dict, vastupidine_sõnastik:dict, otsitav_sõna:str, fail:str):
-#     """Kuvab riigi pealinna, kui kasutaja sisestab riigi nime. Kui riiki ei leita, küsib pealinna ja lisab sõnastikku
-#     :param dict sõnastik: Peamine sõnastik (nt riik_pealinn)
-#     :param dict vastupidine_sõnastik: Vastupidine sõnastik (nt pealinn_riik)
-#     :param str otsitav_sõna: "riik" (küsib riiki, kuvab pealinna) või "pealinn" (küsib pealinna, kuvab riiki)
-#     :param str fail: Sõnastiku .txt fail
-#     """
-#     while True:
-#         if otsitav_sõna=="pealinn":
-#             vastus=input("Sisestage riik: ")
-#             for k in sõnastik:   # k-võti, v-väärtus
-#                 if k.lower()==vastus.lower():   # в случае, если вводит с маленькой буквы
-#                     print("Pealinn:", {sõnastik[k]})
-#                     # räägimine(f"Riik on {k}, Pealinn on {v}", "et")   # text to speech/проговаривание страны и столицы
-#                     return sõnastik, vastupidine_sõnastik
+# Ищем страну или столицу в словаре и добавляем новую пару, если искомое слово отсутствует
+def leia_linn_pealinn(sõnastik:dict, otsitav_sõna:str, fail:str)->dict:
+    """Otsib riigi või pealinna sõnastikust ning lisab uue andmepaari, kui otsitav sõna puudub
+    :param dict sõnastik: Sõnastik
+    :param str otsitav_sõna:  Otsitav sõna, kas "riik" või "pealinn", et valida funktsioon
+    :param str fail: Sõnastiku .txt fail
+    :rtype: dict Uuendatud sõnastik
+    """ 
+    if otsitav_sõna=="pealinn":
+        while True:
+            riik=input("Sisetage riik: ")
+            if riik=="x": 
+                break
+            for k in sõnastik:   # k-võti
+                if k.lower()==riik.lower():    # в случае, если вводит с маленькой буквы
+                    print("Pealinn: ",sõnastik[k])
+                    räägimine(f" Riik on {k}, Pealinn on {sõnastik[k]}", "et")    # text to speech/проговаривание страны и столицы
 
-#             print("Otsingu sõna puudub sõnastikus. Lisame seda!")   # Если не нашли в словаре, спрашиваем и добавляем
-#             uus_sõna=input(f"Sisestage {vastus} vastav {otsitav_sõna}: ")
-#             sõnastik=fail_dict_uuendamine(vastus, uus_sõna, fail, sõnastik)
-#             vastupidine_sõnastik.update({uus_sõna:vastus})
-#             print(f"'{vastus}-{uus_sõna}' on lisatud sõnastikusse")
+                    return sõnastik
+            else:
+                print("Otsingu sõna puudub sõnastikus. Lisame seda!")
+                pealinn=input("Sisestage seda riigi pealinn: ")
+                sõnastik=fail_dict_uuendamine(riik, pealinn, fail, sõnastik)   # Добавляе в фаил (словарь обновляется)
+                print(f"Teave riigi {riik} ja pealinna {pealinn} kohta on lisatud sõnastikusse")
 
-#             return sõnastik, vastupidine_sõnastik
-           
+                return sõnastik   # Возвращаем обновленный словарь
 
-#         elif otsitav_sõna=="riik":
-#             vastus=input("Sisestage pealinn: ")
-#             for k, v in vastupidine_sõnastik.items():
-#                 if k.lower()==vastus.lower():
-#                     print("Riik: ", v)
-#                     # räägimine(f" Riik on {v}, Pealinn on {k}", "et")
-#                     return sõnastik, vastupidine_sõnastik
+    elif otsitav_sõna=="riik":
+        while True:
+            pealinn=input("Sisetage pealinn: ")
+            if pealinn=="x": 
+                break
+            for k, v in sõnastik.items():  # k-võti, v-väärtus
+                if v.lower()==pealinn.lower():   # в случае, если вводит с маленькой буквы
+                    print("Riik: ",sõnastik[k])
+                    räägimine(f" Riik on {sõnastik[k]}, Pealinn on {k}", "et")
 
-#             print("Otsingu sõna puudub sõnastikus. Lisame seda!")   # Если не нашли в словаре, спрашиваем и добавляем
-#             uus_sõna=input(f"Sisestage {vastus} vastav {otsitav_sõna}: ")
-#             sõnastik=fail_dict_uuendamine(uus_sõna, vastus, fail, sõnastik)
-#             vastupidine_sõnastik.update({vastus:uus_sõna})
-#             print(f"'{vastus}-{uus_sõna}' on lisatud sõnastikusse")
-#             return sõnastik, vastupidine_sõnastik
+                    return sõnastik # Возвращаем словарь (он не изменился)
+            else:
+                print("Otsingu sõna puudub sõnastikus. Lisame seda!")
+                riik=input("Sisestage seda pealinna riik: ")
+                sõnastik=fail_dict_uuendamine(riik, pealinn, fail, sõnastik)   # Добавляе в фаил (словарь обновляется)
+                print(f"Teave riigi {riik} ja pealinna {pealinn} kohta on lisatud sõnastikusse")
 
-#         if vastus.lower()=="x":
-#             break
-
-
+                return sõnastik 
 
 # Исправление ошибок в словаре
 def viga_parandus(sõnastik:dict, fail: str)->dict:
@@ -122,6 +123,7 @@ def viga_parandus(sõnastik:dict, fail: str)->dict:
         else:
             print(f"Riik {riik} ei ole sõnastikus.")
 
+# text to speech/проговаривание страны и столицы
 def räägimine(tekst:str,keel:str):
     """Teeb kõne tekstist ja keelest, seejärel mängib heli
     :param str tekst: Tekst, mis teisendatakse kõneks
@@ -130,6 +132,7 @@ def räägimine(tekst:str,keel:str):
     obj=gTTS(text=tekst,lang=keel,slow=False).save("heli.mp3")
     system("heli.mp3")
 
+# Викторина на знание словаря
 def viktoriin(sõnastik:dict):
     """Käivitab viktoriini, kus küsitakse riikide ja pealinnade kohta
     :param dict sõnastik: Sõnastik
