@@ -1,4 +1,5 @@
-﻿Albaania-Tirana
+﻿-x
+Albaania-Tirana
 Andorra-Andorra_la_Vella
 Armeenia-Jerevan
 Aserbaidžaan-Bakuu
