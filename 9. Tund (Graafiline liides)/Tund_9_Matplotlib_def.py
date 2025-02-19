@@ -1,7 +1,7 @@
 import numpy as np   #задает диапазон значений x=[min,max]
 import matplotlib.pyplot as plt  
 
-def Vaal():
+def Vaal(color:str):
     x1=np.arange(0,10,1)    # min, max+step, step
     y1=(2/27)*x1**2-3
 
@@ -32,7 +32,7 @@ def Vaal():
     x10=np.arange(3,4,0.5)
     y10=[3]*len(x10)
 
-    plt.figure(facecolor="lightgreen")
+    plt.figure(facecolor=color)
     plt.title("Vaal")
     plt.ylabel("Y")
     plt.xlabel("X")
@@ -40,14 +40,13 @@ def Vaal():
     ax=plt.axes()
     ax.set_facecolor("lightblue")
     # plt.plot(x1,y1,"r:o")
-    # plt.plot(eval(f"x{i}"),eval(f"y{i}"),"b-*") 
     # b-* цвет, стиль линии и маркер  ("b-*" - если все линии одного цвета)
     colors=["c","m","y","r","g","b","w","k","k","k"]  # 10 разных индексов
     for i in range(1,11):
-        plt.plot(eval(f"x{i}"),eval(f"y{i}"),colors[i-1]+"-*") 
+        plt.plot(eval(f"x{i}"),eval(f"y{i}"),colors[i-1]+"-*")
     plt.show()
 
-def Liblikas():
+def Liblikas(color:str):
     x1=np.arange(-9,-0.5,0.5)    # min, max+step, step
     y1=(-1/8)*(x1+9)**2+8
 
@@ -102,7 +101,7 @@ def Liblikas():
     plt.xlabel("X")
     plt.grid(True)
     ax=plt.axes()
-    ax.set_facecolor("lightyellow")
+    ax.set_facecolor(color)
     colors=["c","m","y","r","g","b","k","k","c","m","y","r","g","b","k","k"] 
     for i in range(1,17):
         plt.plot(eval(f"x{i}"),eval(f"y{i}"),colors[i-1]+"-d") 
