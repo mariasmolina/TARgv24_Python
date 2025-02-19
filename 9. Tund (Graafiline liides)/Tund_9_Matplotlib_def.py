@@ -95,13 +95,13 @@ def Liblikas(color:str):
     x16=np.arange(0,2.5,0.5)
     y16=1.5*x16+2
 
-    plt.figure(facecolor="cyan")
+    plt.figure(facecolor=color)
     plt.title("Liblikas")
     plt.ylabel("Y")
     plt.xlabel("X")
     plt.grid(True)
     ax=plt.axes()
-    ax.set_facecolor(color)
+    ax.set_facecolor("lightblue")
     colors=["c","m","y","r","g","b","k","k","c","m","y","r","g","b","k","k"] 
     for i in range(1,17):
         plt.plot(eval(f"x{i}"),eval(f"y{i}"),colors[i-1]+"-d") 

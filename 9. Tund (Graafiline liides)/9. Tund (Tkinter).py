@@ -1,7 +1,7 @@
 from tkinter import *
 from Tund_9_Matplotlib_def import *
 
-global värv
+global värv,tekst
 
 def värvi_valik():
     värv="white"
@@ -31,11 +31,11 @@ aken.title("Graafikud")
 pealkiri=Label(aken,text="Erinevad piltid Matplotlib abil",font="Poppins 24",fg="purple",bg="cyan", pady=20, width=200)
 
 var=IntVar()
-r1=Radiobutton(aken,text="Vaal",font="Poppins 18",variable=var,value=1,command=figuur)
-r2=Radiobutton(aken,text="Liblikas",font="Poppins 18",variable=var,value=2,command=figuur)
-r3=Radiobutton(aken,text="Prillid",font="Poppins 18",variable=var,value=3,command=figuur)
+r1=Radiobutton(aken,text="Vaal",font="Poppins 18",variable=var,value=1,command=lambda:figuur(värv=värvi_valik()))
+r2=Radiobutton(aken,text="Liblikas",font="Poppins 18",variable=var,value=2,command=lambda:figuur(värv=värvi_valik()))
+r3=Radiobutton(aken,text="Prillid",font="Poppins 18",variable=var,value=3,command=lambda:figuur(värv=värvi_valik()))
 tekst=Entry(aken,font="Poppins 24",fg="purple",bg="cyan",width=100)
-nupp=Button(aken,text="Värvi valik",font="Poppins 18",fg="cyan",bg="purple",command=värvi_valik)
+nupp=Button(aken,text="Värvi valik",font="Poppins 18",fg="cyan",bg="purple",command=värvi_valik())
 
 
 # Расположение    # place(x=...,y=...), grid(column=...,row=...)
