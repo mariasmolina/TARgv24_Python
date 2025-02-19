@@ -10,7 +10,6 @@ def värvi_valik():
         värv=tekst.get()   # .get - получаем информацию
     else:
         tekst.configure(bg="lightblue")
-    figuur(värv)
     return värv
 
 def figuur(värv:str):
