@@ -5,7 +5,7 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>8. Tund (Sõnastikud)\8. Tund (Euroopa riigid).py</StartupFile>
+    <StartupFile>9. Tund (Graafiline liides)\9. Tund (Matplotlib.).py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -48,6 +48,7 @@
     <Compile Include="7. Tund %28Töö failidega%29\vastuvott_Module.py" />
     <Compile Include="8. Tund %28Sõnastikud%29\8. Tund %28Euroopa riigid%29.py" />
     <Compile Include="8. Tund %28Sõnastikud%29\Euroopa_Liigid_Module.py" />
+    <Compile Include="9. Tund %28Graafiline liides%29\9. Tund %28Matplotlib.%29.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="6. Tund %28Def%29\Tund6_Modul.py" />
@@ -68,6 +69,7 @@
     <Folder Include="6. Tund %28Def%29\" />
     <Folder Include="7. Tund %28Töö failidega%29\" />
     <Folder Include="8. Tund %28Sõnastikud%29\" />
+    <Folder Include="9. Tund %28Graafiline liides%29\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
