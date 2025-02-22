@@ -68,7 +68,7 @@ lahenda_nupp=Button(teine_rida,text="Решить",command=lahenda,font="Calibri
 graafik_nupp=Button(teine_rida,text="График",command=graafik,font="Calibri 20",bg="green",fg="black",width=7,pady=1)
 
 # Поле для вывода результата
-tulemus=Label(aken,text="Решение",bg="yellow",width=50,height=5)
+tulemus=Label(aken,font="Calibri 12",text="Решение",bg="yellow",width=50,height=5)
 
 # Расположение
 pealkiri.pack()
