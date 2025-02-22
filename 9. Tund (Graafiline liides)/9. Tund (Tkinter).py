@@ -2,7 +2,7 @@ from tkinter import *
 from Tund_9_Matplotlib_def import *
 
 global värv
-värv = "white"  # Начальный цвет
+värv="white"  # Начальный цвет
 
 def värvi_valik():
     global värv   # Указываем, что работаем с глобальной переменной

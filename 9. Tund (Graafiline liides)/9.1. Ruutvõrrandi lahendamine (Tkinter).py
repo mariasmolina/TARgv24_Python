@@ -1,0 +1,1 @@
+from Ruutvõrrandi_lahendamine_Matplotlib_def import *
