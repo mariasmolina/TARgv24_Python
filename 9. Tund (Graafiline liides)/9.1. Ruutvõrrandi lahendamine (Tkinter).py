@@ -28,7 +28,7 @@ def lahenda():
 
         tulemus.configure(text=(funktsiooni_lahendamine(a,b,c))) 
     except:
-        tulemus.configure(text="Viga! Sisestage arv!")
+        tulemus.configure(text="Введите число!")
 
 def graafik():
     try:
@@ -40,7 +40,7 @@ def graafik():
 
         funktsiooni_graafik(a,b,c)
     except:
-        tulemus.configure(text="Viga! Sisestage arv!")
+        tulemus.configure(text="Введите число!")
 
 # Создание окна
 aken=Tk()
