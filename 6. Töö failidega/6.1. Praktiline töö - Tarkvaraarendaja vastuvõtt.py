@@ -6,7 +6,7 @@ from vastuvott_Module import *
 
 # "7. Tund (Töö failidega)/kusimused_vastused.txt" Указываю путь к файлу, тк место откуда запускается программа, находится в другой папке
 
-kus_vas=laadi_kusimused_vastused('7. Tund (Töö failidega)/kusimused_vastused.txt')
+kus_vas=laadi_kusimused_vastused('6. Töö failidega/kusimused_vastused.txt')
 
 vastuvõetud=[]     # Принятые кадидаты (имя, баллы)
 ebaõnnestunud=[]   # Отклоненные кандидаты (имя)
@@ -23,16 +23,16 @@ while len(vastuvõetud)<5:
         ebaõnnestunud.append(nimi)
 
 # Добавляем данные кандидатов в файлы
-andmete_faili_kirjutamine(vastuvõetud,ebaõnnestunud,'7. Tund (Töö failidega)/vastuvõetud.txt','7. Tund (Töö failidega)/eisoobi.txt')
+andmete_faili_kirjutamine(vastuvõetud,ebaõnnestunud,'6. Töö failidega/vastuvõetud.txt','6. Töö failidega/eisoobi.txt')
 
 # Выводим список принятых кандидатов
 print("\nVastuvõetud kandidaadid:\n")
-with open('7. Tund (Töö failidega)/vastuvõetud.txt','r') as f:
+with open('6. Töö failidega/vastuvõetud.txt','r') as f:
     for line in f:
         print(line)
 
 # Выводим список отклоненных кандидатов
 print("\nEbaõnnestunud kandidaadid:\n")
-with open('7. Tund (Töö failidega)/eisoobi.txt','r') as f:
+with open('6. Töö failidega/eisoobi.txt','r') as f:
     for line in f:
         print(line)
