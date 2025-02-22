@@ -41,11 +41,11 @@
     <Compile Include="5. Kasutajate funktsioonid %28Def%29\5.2. Iseseisevtöö - Registreerimine ja autoriseerimine.py" />
     <Compile Include="5. Kasutajate funktsioonid %28Def%29\Isikukood_Modul.py" />
     <Compile Include="5. Kasutajate funktsioonid %28Def%29\MyModule.py" />
-    <Compile Include="7. Tund %28Töö failidega%29\7. Töö failidega - teooria.py" />
-    <Compile Include="7. Tund %28Töö failidega%29\7.1. Praktiline töö - Tarkvaraarendaja vastuvõtt.py" />
-    <Compile Include="7. Tund %28Töö failidega%29\7.2. Aut_Reg.py" />
-    <Compile Include="7. Tund %28Töö failidega%29\MinuOmaMoodul.py" />
-    <Compile Include="7. Tund %28Töö failidega%29\vastuvott_Module.py" />
+    <Compile Include="6. Töö failidega\6. Töö failidega - teooria.py" />
+    <Compile Include="6. Töö failidega\7.1. Praktiline töö - Tarkvaraarendaja vastuvõtt.py" />
+    <Compile Include="6. Töö failidega\7.2. Aut_Reg.py" />
+    <Compile Include="6. Töö failidega\MinuOmaMoodul.py" />
+    <Compile Include="6. Töö failidega\vastuvott_Module.py" />
     <Compile Include="8. Tund %28Sõnastikud%29\8. Tund %28Euroopa riigid%29.py" />
     <Compile Include="8. Tund %28Sõnastikud%29\Euroopa_Liigid_Module.py" />
     <Compile Include="9. Tund %28Graafiline liides%29\9. Tund %28Tkinter%29.py" />
@@ -57,11 +57,11 @@
     <Content Include="2. Tingimuslik operaator IF\2.1. Plokkskeem _Ülesanne 9 - Ruut_.pdf" />
     <Content Include="2. Tingimuslik operaator IF\2.2. Plokkskeem _Ülesanne 10 - Matemaatika_.pdf" />
     <Content Include="5. Kasutajate funktsioonid %28Def%29\Tund6_Modul.py" />
-    <Content Include="7. Tund %28Töö failidega%29\eisoobi.txt" />
-    <Content Include="7. Tund %28Töö failidega%29\Kasutajad.txt" />
-    <Content Include="7. Tund %28Töö failidega%29\kusimused_vastused.txt" />
-    <Content Include="7. Tund %28Töö failidega%29\Salasõnad.txt" />
-    <Content Include="7. Tund %28Töö failidega%29\vastuvõetud.txt" />
+    <Content Include="6. Töö failidega\eisoobi.txt" />
+    <Content Include="6. Töö failidega\Kasutajad.txt" />
+    <Content Include="6. Töö failidega\kusimused_vastused.txt" />
+    <Content Include="6. Töö failidega\Salasõnad.txt" />
+    <Content Include="6. Töö failidega\vastuvõetud.txt" />
     <Content Include="8. Tund %28Sõnastikud%29\riigid_pealinnad.txt" />
     <Content Include="heli.mp3" />
   </ItemGroup>
@@ -71,7 +71,7 @@
     <Folder Include="3. Kordused\" />
     <Folder Include="4. Järjend_List\" />
     <Folder Include="5. Kasutajate funktsioonid %28Def%29\" />
-    <Folder Include="7. Tund %28Töö failidega%29\" />
+    <Folder Include="6. Töö failidega\" />
     <Folder Include="8. Tund %28Sõnastikud%29\" />
     <Folder Include="9. Tund %28Graafiline liides%29\" />
   </ItemGroup>
