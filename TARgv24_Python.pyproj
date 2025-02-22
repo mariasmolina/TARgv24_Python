@@ -32,10 +32,10 @@
     <Compile Include="3. Kordused\3.2. Töö - Vigade otsing -2 %28Sirakus%29.py" />
     <Compile Include="3. Kordused\3.3. Plokkskeemid.py" />
     <Compile Include="3. Kordused\3.4. Kodutöö IF,While, For %288.01.2025%29.py" />
-    <Compile Include="5. Tund %28Järjend_List%29\5. Tund %28Järjend_List%29.py" />
-    <Compile Include="5. Tund %28Järjend_List%29\5.1. Praktiline töö 1 - Sõne ja järjesti funktsioonid.py" />
-    <Compile Include="5. Tund %28Järjend_List%29\5.2. Praktiline töö 2 - Listid.py" />
-    <Compile Include="5. Tund %28Järjend_List%29\5.3. Kodutöö - Isikukood.py" />
+    <Compile Include="4. Järjend_List\4. Tund %28Järjend_List%29.py" />
+    <Compile Include="4. Järjend_List\4.1. Praktiline töö 1 - Sõne ja järjesti funktsioonid.py" />
+    <Compile Include="4. Järjend_List\4.2. Praktiline töö 2 - Listid.py" />
+    <Compile Include="4. Järjend_List\4.3. Kodutöö - Isikukood.py" />
     <Compile Include="6. Tund %28Def%29\6. Tund %28Def%29.py" />
     <Compile Include="6. Tund %28Def%29\6.1. Kodutöö - Isikukood.py" />
     <Compile Include="6. Tund %28Def%29\6.2. Iseseisevtöö - Registreerimine ja autoriseerimine.py" />
@@ -69,7 +69,7 @@
     <Folder Include="1. Lineaarsed programmid\" />
     <Folder Include="2. Tingimuslik operaator IF\" />
     <Folder Include="3. Kordused\" />
-    <Folder Include="5. Tund %28Järjend_List%29\" />
+    <Folder Include="4. Järjend_List\" />
     <Folder Include="6. Tund %28Def%29\" />
     <Folder Include="7. Tund %28Töö failidega%29\" />
     <Folder Include="8. Tund %28Sõnastikud%29\" />
