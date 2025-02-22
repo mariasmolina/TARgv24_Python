@@ -22,16 +22,16 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="3. Tund %28Tingimuslik operaator IF%29\3.3. Iseseisevtöö-Valiklaused %28Ruutvõrrand%29.py" />
-    <Compile Include="1. Tund %28Math_Random_print_input%29\1. Tund %28Math_Random_print_input%29.py" />
-    <Compile Include="2. Tund %28Datetime_Try_except%29\2. Tund %28Datetime_Try_except%29.py" />
-    <Compile Include="3. Tund %28Tingimuslik operaator IF%29\3. Tund %28Tingimuslik operaator IF%29.py" />
-    <Compile Include="2. Tund %28Datetime_Try_except%29\2.1. Vigade otsing - iseseisev töö.py" />
-    <Compile Include="4. Tund %28Kordused%29\4. Tund %28Kordused%29.py" />
-    <Compile Include="4. Tund %28Kordused%29\4.1. Praktiline töö - Matemaatika.py" />
-    <Compile Include="4. Tund %28Kordused%29\4.2. Töö - Vigade otsing -2 %28Sirakus%29.py" />
-    <Compile Include="4. Tund %28Kordused%29\4.3. Plokkskeemid.py" />
-    <Compile Include="4. Tund %28Kordused%29\4.4. Kodutöö IF,While, For %288.01.2025%29.py" />
+    <Compile Include="2. Tingimuslik operaator IF\2.3. Iseseisevtöö-Valiklaused %28Ruutvõrrand%29.py" />
+    <Compile Include="1. Lineaarsed programmid\1.1. Tund %28Math_Random_print_input%29.py" />
+    <Compile Include="1. Lineaarsed programmid\1. Tund %28Datetime_Try_except%29.py" />
+    <Compile Include="2. Tingimuslik operaator IF\2. Tund %28Tingimuslik operaator IF%29.py" />
+    <Compile Include="1. Lineaarsed programmid\1.2. Vigade otsing - iseseisev töö.py" />
+    <Compile Include="3. Kordused\3. Tund %28Kordused%29.py" />
+    <Compile Include="3. Kordused\3.1. Praktiline töö - Matemaatika.py" />
+    <Compile Include="3. Kordused\3.2. Töö - Vigade otsing -2 %28Sirakus%29.py" />
+    <Compile Include="3. Kordused\3.3. Plokkskeemid.py" />
+    <Compile Include="3. Kordused\3.4. Kodutöö IF,While, For %288.01.2025%29.py" />
     <Compile Include="5. Tund %28Järjend_List%29\5. Tund %28Järjend_List%29.py" />
     <Compile Include="5. Tund %28Järjend_List%29\5.1. Praktiline töö 1 - Sõne ja järjesti funktsioonid.py" />
     <Compile Include="5. Tund %28Järjend_List%29\5.2. Praktiline töö 2 - Listid.py" />
@@ -54,6 +54,8 @@
     <Compile Include="9. Tund %28Graafiline liides%29\Tund_9_Matplotlib_def.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="2. Tingimuslik operaator IF\2.1. Plokkskeem _Ülesanne 9 - Ruut_.pdf" />
+    <Content Include="2. Tingimuslik operaator IF\2.2. Plokkskeem _Ülesanne 10 - Matemaatika_.pdf" />
     <Content Include="6. Tund %28Def%29\Tund6_Modul.py" />
     <Content Include="7. Tund %28Töö failidega%29\eisoobi.txt" />
     <Content Include="7. Tund %28Töö failidega%29\Kasutajad.txt" />
@@ -64,10 +66,9 @@
     <Content Include="heli.mp3" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="1. Tund %28Math_Random_print_input%29\" />
-    <Folder Include="2. Tund %28Datetime_Try_except%29\" />
-    <Folder Include="3. Tund %28Tingimuslik operaator IF%29\" />
-    <Folder Include="4. Tund %28Kordused%29\" />
+    <Folder Include="1. Lineaarsed programmid\" />
+    <Folder Include="2. Tingimuslik operaator IF\" />
+    <Folder Include="3. Kordused\" />
     <Folder Include="5. Tund %28Järjend_List%29\" />
     <Folder Include="6. Tund %28Def%29\" />
     <Folder Include="7. Tund %28Töö failidega%29\" />
