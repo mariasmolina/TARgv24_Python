@@ -5,6 +5,7 @@ import numpy as np
 
 def funktsiooni_lahendamine(a,b,c):
     """Решение функции ax^2+bx+c=0"""
+
     D=b**2-4*a*c
     if D<0:
         return (f"D={D}\nРешений нет")
@@ -18,6 +19,7 @@ def funktsiooni_lahendamine(a,b,c):
 
 def funktsiooni_graafik(a,b,c):
     """График функции ax^2+bx+c=0"""
+
     x0=-b/(2*a)    # x координата вершины параболы
     y0=a*x0**2+b*x0+c     # y координата вершины параболы
     xmin=-7.5
