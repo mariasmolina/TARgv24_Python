@@ -43,7 +43,7 @@
     <Compile Include="5. Kasutajate funktsioonid %28Def%29\MyModule.py" />
     <Compile Include="6. Töö failidega\6. Töö failidega - teooria.py" />
     <Compile Include="6. Töö failidega\6.1. Praktiline töö - Tarkvaraarendaja vastuvõtt.py" />
-    <Compile Include="6. Töö failidega\7.2. Aut_Reg.py" />
+    <Compile Include="6. Töö failidega\6.2. Aut_Reg.py" />
     <Compile Include="6. Töö failidega\MinuOmaMoodul.py" />
     <Compile Include="6. Töö failidega\vastuvott_Module.py" />
     <Compile Include="8. Tund %28Sõnastikud%29\8. Tund %28Euroopa riigid%29.py" />
