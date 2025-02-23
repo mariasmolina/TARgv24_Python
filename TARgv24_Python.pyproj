@@ -5,7 +5,7 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>9. Tund (Graafiline liides)\9.1. Ruutvõrrandi lahendamine (Tkinter).py</StartupFile>
+    <StartupFile>8. Tund (Graafiline liides)\9.1. Ruutvõrrandi lahendamine (Tkinter).py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -48,10 +48,10 @@
     <Compile Include="6. Töö failidega\vastuvott_Module.py" />
     <Compile Include="7. Sõnastikud %28Dictionary%29\7. Tund %28Euroopa riigid%29.py" />
     <Compile Include="7. Sõnastikud %28Dictionary%29\Euroopa_Liigid_Module.py" />
-    <Compile Include="9. Tund %28Graafiline liides%29\9. Tund %28Tkinter%29.py" />
-    <Compile Include="9. Tund %28Graafiline liides%29\9.1. Ruutvõrrandi lahendamine %28Tkinter%29.py" />
-    <Compile Include="9. Tund %28Graafiline liides%29\Ruutvõrrandi_lahendamine_Matplotlib_def.py" />
-    <Compile Include="9. Tund %28Graafiline liides%29\Tund_9_Matplotlib_def.py" />
+    <Compile Include="8. Tund %28Graafiline liides%29\8. Tund %28Tkinter%29.py" />
+    <Compile Include="8. Tund %28Graafiline liides%29\9.1. Ruutvõrrandi lahendamine %28Tkinter%29.py" />
+    <Compile Include="8. Tund %28Graafiline liides%29\Ruutvõrrandi_lahendamine_Matplotlib_def.py" />
+    <Compile Include="8. Tund %28Graafiline liides%29\Tund_9_Matplotlib_def.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="2. Tingimuslik operaator IF\2.1. Plokkskeem _Ülesanne 9 - Ruut_.pdf" />
@@ -73,7 +73,7 @@
     <Folder Include="5. Kasutajate funktsioonid %28Def%29\" />
     <Folder Include="6. Töö failidega\" />
     <Folder Include="7. Sõnastikud %28Dictionary%29\" />
-    <Folder Include="9. Tund %28Graafiline liides%29\" />
+    <Folder Include="8. Tund %28Graafiline liides%29\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
