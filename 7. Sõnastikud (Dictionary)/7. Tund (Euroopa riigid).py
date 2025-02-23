@@ -2,7 +2,7 @@
 
 from Euroopa_Liigid_Module import *
 
-riik_pealinn, pealinn_riik, riigid = failist_to_dict('8. Tund (Sõnastikud)/riigid_pealinnad.txt')
+riik_pealinn, pealinn_riik, riigid = failist_to_dict('7. Sõnastikud (Dictionary)/riigid_pealinnad.txt')
 riigid=list(riik_pealinn.keys())
 
 while True:
@@ -17,15 +17,15 @@ while True:
 
  # Вывод столицы, если вводиться название государства (и добавление в словарь - если нет)
     elif vastus==2:
-        riik_pealinn=leia_linn_pealinn(riik_pealinn, "pealinn", '8. Tund (Sõnastikud)/riigid_pealinnad.txt')
+        riik_pealinn=leia_linn_pealinn(riik_pealinn, "pealinn", '7. Sõnastikud (Dictionary)/riigid_pealinnad.txt')
 
 # Вывод государства, если вводиться столица (и добавление в словарь - если нет)
     elif vastus==3:
-        riik_pealinn=leia_linn_pealinn(riik_pealinn, "riik", '8. Tund (Sõnastikud)/riigid_pealinnad.txt')
+        riik_pealinn=leia_linn_pealinn(riik_pealinn, "riik", '7. Sõnastikud (Dictionary)/riigid_pealinnad.txt')
 
 # Если пользователь находит ошибку в словаре, то у него есть возможность ее исправить
     elif vastus==4:
-        riik_pealinn=viga_parandus(riik_pealinn, '8. Tund (Sõnastikud)/riigid_pealinnad.txt')
+        riik_pealinn=viga_parandus(riik_pealinn, '7. Sõnastikud (Dictionary)/riigid_pealinnad.txt')
     
     elif vastus==5:
         viktoriin(riik_pealinn)

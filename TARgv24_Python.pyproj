@@ -46,8 +46,8 @@
     <Compile Include="6. Töö failidega\6.2. Aut_Reg.py" />
     <Compile Include="6. Töö failidega\MinuOmaMoodul.py" />
     <Compile Include="6. Töö failidega\vastuvott_Module.py" />
-    <Compile Include="8. Tund %28Sõnastikud%29\8. Tund %28Euroopa riigid%29.py" />
-    <Compile Include="8. Tund %28Sõnastikud%29\Euroopa_Liigid_Module.py" />
+    <Compile Include="7. Sõnastikud %28Dictionary%29\7. Tund %28Euroopa riigid%29.py" />
+    <Compile Include="7. Sõnastikud %28Dictionary%29\Euroopa_Liigid_Module.py" />
     <Compile Include="9. Tund %28Graafiline liides%29\9. Tund %28Tkinter%29.py" />
     <Compile Include="9. Tund %28Graafiline liides%29\9.1. Ruutvõrrandi lahendamine %28Tkinter%29.py" />
     <Compile Include="9. Tund %28Graafiline liides%29\Ruutvõrrandi_lahendamine_Matplotlib_def.py" />
@@ -62,7 +62,7 @@
     <Content Include="6. Töö failidega\kusimused_vastused.txt" />
     <Content Include="6. Töö failidega\Salasõnad.txt" />
     <Content Include="6. Töö failidega\vastuvõetud.txt" />
-    <Content Include="8. Tund %28Sõnastikud%29\riigid_pealinnad.txt" />
+    <Content Include="7. Sõnastikud %28Dictionary%29\riigid_pealinnad.txt" />
     <Content Include="heli.mp3" />
   </ItemGroup>
   <ItemGroup>
@@ -72,7 +72,7 @@
     <Folder Include="4. Järjend_List\" />
     <Folder Include="5. Kasutajate funktsioonid %28Def%29\" />
     <Folder Include="6. Töö failidega\" />
-    <Folder Include="8. Tund %28Sõnastikud%29\" />
+    <Folder Include="7. Sõnastikud %28Dictionary%29\" />
     <Folder Include="9. Tund %28Graafiline liides%29\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
