@@ -51,7 +51,7 @@
     <Compile Include="8. Tund %28Graafiline liides%29\8. Tund %28Tkinter%29.py" />
     <Compile Include="8. Tund %28Graafiline liides%29\9.1. Ruutvõrrandi lahendamine %28Tkinter%29.py" />
     <Compile Include="8. Tund %28Graafiline liides%29\Ruutvõrrandi_lahendamine_Matplotlib_def.py" />
-    <Compile Include="8. Tund %28Graafiline liides%29\Tund_9_Matplotlib_def.py" />
+    <Compile Include="8. Tund %28Graafiline liides%29\Tund_8_Matplotlib_def.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="2. Tingimuslik operaator IF\2.1. Plokkskeem _Ülesanne 9 - Ruut_.pdf" />

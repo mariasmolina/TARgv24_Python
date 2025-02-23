@@ -1,5 +1,5 @@
 from tkinter import *
-from Tund_9_Matplotlib_def import *
+from Tund_8_Matplotlib_def import *
 
 global värv
 värv="white"  # Начальный цвет
