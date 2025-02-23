@@ -5,7 +5,7 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>8. Tund (Graafiline liides)\9.1. Ruutvõrrandi lahendamine (Tkinter).py</StartupFile>
+    <StartupFile>8. Tund (Graafiline liides)\8.1. Ruutvõrrandi lahendamine (Tkinter).py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -49,7 +49,7 @@
     <Compile Include="7. Sõnastikud %28Dictionary%29\7. Tund %28Euroopa riigid%29.py" />
     <Compile Include="7. Sõnastikud %28Dictionary%29\Euroopa_Liigid_Module.py" />
     <Compile Include="8. Tund %28Graafiline liides%29\8. Tund %28Tkinter%29.py" />
-    <Compile Include="8. Tund %28Graafiline liides%29\9.1. Ruutvõrrandi lahendamine %28Tkinter%29.py" />
+    <Compile Include="8. Tund %28Graafiline liides%29\8.1. Ruutvõrrandi lahendamine %28Tkinter%29.py" />
     <Compile Include="8. Tund %28Graafiline liides%29\Ruutvõrrandi_lahendamine_Matplotlib_def.py" />
     <Compile Include="8. Tund %28Graafiline liides%29\Tund_8_Matplotlib_def.py" />
   </ItemGroup>
