@@ -5,7 +5,7 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>8. Graafiline liides (Tkinter ja Matplotlib)\8.1. Ruutvõrrandi lahendamine (Tkinter).py</StartupFile>
+    <StartupFile>8. Graafiline liides (Tkinter ja Matplotlib)\8.2. Praktiline töö (E-posti klient).py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -50,6 +50,7 @@
     <Compile Include="7. Sõnastikud %28Dictionary%29\Euroopa_Liigid_Module.py" />
     <Compile Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\8. Tund %28Tkinter%29.py" />
     <Compile Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\8.1. Ruutvõrrandi lahendamine %28Tkinter%29.py" />
+    <Compile Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\8.2. Praktiline töö %28E-posti klient%29.py" />
     <Compile Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\Ruutvõrrandi_lahendamine_Matplotlib_def.py" />
     <Compile Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\Tund_8_Matplotlib_def.py" />
   </ItemGroup>
@@ -63,6 +64,8 @@
     <Content Include="6. Töö failidega\Salasõnad.txt" />
     <Content Include="6. Töö failidega\vastuvõetud.txt" />
     <Content Include="7. Sõnastikud %28Dictionary%29\riigid_pealinnad.txt" />
+    <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\bg.png" />
+    <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\bg_2.png" />
     <Content Include="heli.mp3" />
   </ItemGroup>
   <ItemGroup>
