@@ -1,1 +1,12 @@
-"apple","lemon","mango","peach","plumb","cherry","grape","horse","shark","geese"
+jänes
+päike
+kevad
+sõber
+tänav
+juust
+kakao
+ploom
+laine
+valge
+tütar
+aasta

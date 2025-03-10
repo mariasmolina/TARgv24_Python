@@ -69,6 +69,8 @@
     <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\bg_2.png" />
     <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\hele_bg.jpg" />
     <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\LilitaOne-Regular.ttf" />
+    <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\rating.png" />
+    <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\reeglid.png" />
     <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\sonad.txt" />
     <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\tulemused.txt" />
     <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\tume_bg.jpg" />
