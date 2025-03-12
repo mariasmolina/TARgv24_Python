@@ -72,7 +72,7 @@ def kontrolli_makset():
         logi_makse(payment_reference, seisund)
 
         if seisund == "settled":
-            saada_email("mariia.smolina@gmail.com", payment_reference)
+            saada_email("andreiismolin@gmail.com", payment_reference)
     else:
         messagebox.showerror("Ошибка", f"Не удалось проверить платёж: {response.text}")
 
