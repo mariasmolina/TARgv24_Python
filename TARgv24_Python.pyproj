@@ -5,7 +5,7 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>9. Töö andmebaasiga (SQlite3)\9. Tund (SQlite3).py</StartupFile>
+    <StartupFile>9. Töö andmebaasiga (SQlite3)\9.2. Tabeli struktuuri loomine.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -56,6 +56,8 @@
     <Compile Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\Ruutvõrrandi_lahendamine_Matplotlib_def.py" />
     <Compile Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\Tund_8_Matplotlib_def.py" />
     <Compile Include="9. Töö andmebaasiga %28SQlite3%29\9. Tund %28SQlite3%29.py" />
+    <Compile Include="9. Töö andmebaasiga %28SQlite3%29\9.1. Andmebaas Tkinteris.py" />
+    <Compile Include="9. Töö andmebaasiga %28SQlite3%29\9.2. Tabeli struktuuri loomine.py" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="2. Tingimuslik operaator IF\2.1. Plokkskeem _Ülesanne 9 - Ruut_.pdf" />
@@ -76,6 +78,7 @@
     <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\sonad.txt" />
     <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\tulemused.txt" />
     <Content Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\tume_bg.jpg" />
+    <Content Include="9. Töö andmebaasiga %28SQlite3%29\movies.db" />
     <Content Include="heli.mp3" />
   </ItemGroup>
   <ItemGroup>
