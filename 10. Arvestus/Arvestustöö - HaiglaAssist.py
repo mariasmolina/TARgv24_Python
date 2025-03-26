@@ -16,17 +16,21 @@ cursor.execute('''CREATE TABLE IF NOT EXISTS kasutajad (
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS patsiendid (
                     ID INTEGER PRIMARY KEY AUTOINCREMENT,
-                    Eesnimi TEXT,
-                    Perekonnanimi TEXT,
-                    Vanus INTEGER,
-                    Kaal REAL,
+                    eesnimi TEXT,
+                    perekonnanimi TEXT,
+                    email TEXT,
+                    isikukood TEXT,  
+                    kaal REAL,
+                    pikkus REAL,
+                    ylemineRohk REAL,
+                    madalamRohk REAL,
+                    temperatuur REAL,
                     kaebus TEXT,
                     diagnoos TEXT,
-                    ravitoitumine TEXT,
+                    dieet TEXT,
+                    registreerimiseAeg TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
                     staatus TEXT DEFAULT 'ожидание',
                     arstiSoovitused TEXT,
-                    registreerimise_aeg TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-                    email TEXT,
                     arst_ID INTEGER,
                     FOREIGN KEY (arst_ID) REFERENCES kasutajad(ID))''')
 
@@ -108,7 +112,7 @@ def patsiendide_andmed():
     scrollbar=tk.Scrollbar(frame)
     scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
 
-    tree=ttk.Treeview(frame, yscrollcommand=scrollbar.set, columns=("Eesnimi", "Perekonnanimi", "Vanus", "Kaal", "Kaebus", "Diagnoos", "Ravitoitumine", "Staatus", "Email"), show="headings")
+    tree=ttk.Treeview(frame, yscrollcommand=scrollbar.set, columns=("Eesnimi", "Perekonnanimi", "Isikukood", "Sugu", "Vanus", "Kaal", "Pikkus", "Rõhk", "Temperatuur", "Kaebus", "Diagnoos", "Dieet", "Registreerimis aeg", "Staatus", "Arst", "Ravitoitumine","Staatus"), show="headings")
     tree.pack(fill=tk.BOTH, expand=True)
 
     # Связываем прокрутку с таблицей
@@ -117,24 +121,40 @@ def patsiendide_andmed():
     # Заголовки столбцов
     tree.heading("Eesnimi", text="Eesnimi")
     tree.heading("Perekonnanimi", text="Perekonnanimi")
+    tree.heading("Isikukood", text="Isikukood")
+    tree.heading("Sugu", text="Sugu")
     tree.heading("Vanus", text="Vanus")
     tree.heading("Kaal", text="Kaal")
+    tree.heading("Pikkus", text="Pikkus")
+    tree.heading("Rõhk", text="Rõhk")
+    tree.heading("Temperatuur", text="Temperatuur")
     tree.heading("Kaebus", text="Kaebus")
     tree.heading("Diagnoos", text="Diagnoos")
+    tree.heading("Dieet", text="Dieet")
+    tree.heading("Registreerimis aeg", text="Registreerimis aeg")
+    tree.heading("Staatus", text="Staatus")
+    tree.heading("Arst", text="Arst")
     tree.heading("Ravitoitumine", text="Ravitoitumine")
     tree.heading("Staatus", text="Staatus")
-    tree.heading("Email", text="Email")
 
     # Ширина столбцов
     tree.column("Eesnimi", width=100)
     tree.column("Perekonnanimi", width=150)
-    tree.column("Vanus", width=60)
-    tree.column("Kaal", width=80)
-    tree.column("Kaebus", width=200)
-    tree.column("Diagnoos", width=100)
+    tree.column("Isikukood", width=60)
+    tree.column("Sugu", width=80)
+    tree.column("Vanus", width=200)
+    tree.column("Kaal", width=100)
+    tree.column("Pikkus", width=150)
+    tree.column("Rõhk", width=100)
+    tree.column("Temperatuur", width=150)
+    tree.column("Kaebus", width=150)
+    tree.column("Diagnoos", width=150)
+    tree.column("Dieet", width=150)
+    tree.column("Registreerimis aeg", width=150)
+    tree.column("Staatus", width=150)
+    tree.column("Arst", width=150)
     tree.column("Ravitoitumine", width=150)
-    tree.column("Staatus", width=100)
-    tree.column("Email", width=150)
+    tree.column("Staatus", width=150)
 
     # Загружаем данные из базы данных
     load_data_from_db(tree)
@@ -159,22 +179,51 @@ def lisa_patsient():
     sisend_perekonnanimi = tk.Entry(lisa_patsient_aken)
     sisend_perekonnanimi.pack()
 
-    tk.Label(lisa_patsient_aken, text="Vanus").pack()
-    sisend_vanus = tk.Entry(lisa_patsient_aken)
-    sisend_vanus.pack()
+    tk.Label(lisa_patsient_aken, text="E-mail").pack()
+    sisend_email = tk.Entry(lisa_patsient_aken)
+    sisend_email.pack()
+
+    tk.Label(lisa_patsient_aken, text="Isikukood").pack()
+    sisend_ikood = tk.Entry(lisa_patsient_aken)
+    sisend_ikood.pack()
 
     tk.Label(lisa_patsient_aken, text="Kaal (kg)").pack()
     sisend_kaal = tk.Entry(lisa_patsient_aken)
     sisend_kaal.pack()
 
-    tk.Label(lisa_patsient_aken, text="Kaebused").pack()
-    sisend_kaebused = tk.Text(lisa_patsient_aken, height=3, width=30)
-    sisend_kaebused.pack()
+    tk.Label(lisa_patsient_aken, text="Pikkus (cm)").pack()
+    sisend_pikkus = tk.Entry(lisa_patsient_aken)
+    sisend_pikkus.pack()
+
+    tk.Label(lisa_patsient_aken, text="Ülemine rõhk").pack()
+    sisend_ylemine_rohk = tk.Entry(lisa_patsient_aken)
+    sisend_ylemine_rohk.pack()
+
+    tk.Label(lisa_patsient_aken, text="Madalam rõhk").pack()
+    sisend_madalam_rohk = tk.Entry(lisa_patsient_aken)
+    sisend_madalam_rohk.pack()
+
+    tk.Label(lisa_patsient_aken, text="Temperatuur").pack()
+    sisend_temperatuur = tk.Entry(lisa_patsient_aken)
+    sisend_temperatuur.pack()
+
+    tk.Label(lisa_patsient_aken, text="Kaebus").pack()
+    sisend_temperatuur = tk.Text(lisa_patsient_aken, height=3, width=30)
+    sisend_temperatuur.pack()
 
     # Выбор диагноза (Combobox)
     tk.Label(lisa_patsient_aken, text="Diagnoos").pack()
     valitud_diagnoos = ttk.Combobox(lisa_patsient_aken, values=["Diabeet", "Hüpertensioon", "Gastriit"])
     valitud_diagnoos.pack()
+
+    tk.Label(lisa_patsient_aken, text="Dieet").pack()
+    sisend_dieet = tk.Entry(lisa_patsient_aken)
+    sisend_dieet.pack()
+
+    # Выбор диагноза (Combobox)
+    tk.Label(lisa_patsient_aken, text="Arst").pack()
+    valitud_arst = ttk.Combobox(lisa_patsient_aken, values=["Diabeet", "Hüpertensioon", "Gastriit"])
+    valitud_arst.pack()
 
     tk.Label(lisa_patsient_aken, text="Email").pack()
     sisend_email = tk.Entry(lisa_patsient_aken)
@@ -242,13 +291,6 @@ def salvesta_patsient():
 
 
 
-
-
-
-
-
-
-    
 # ----- Peaaken -----
 aken_login=tk.Tk()
 aken_login.title("Autoriseerimine")
