@@ -1,5 +1,5 @@
 import tkinter as tk
-import sqlite3, requests, random, json, string, smtplib, ssl
+import sqlite3, webbrowser, requests, random, json, string, smtplib, ssl
 from tkinter import filedialog, messagebox, ttk, font
 from Isikukood_Modul import *
 from db_funktsioonid import *
@@ -7,45 +7,37 @@ from PIL import Image, ImageTk
 from email.message import EmailMessage
 
 
-
-# Глобальные переменные для хранения данных
-patsiendid=[]
-kasutajad=[]
-
-def db_data():
-    global patsiendid, kasutajad
-
+# Выводит данные таблиц из базы данных в терминале (для себя)
+def print_patsiendid():
     # Подключение к базе данных
-    conn=sqlite3.connect("Arvestus/AppData/haigla.db")
+    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
 
-    # Получаем все данные из таблиц
+    # Проверка успешного соединения
+    print("\nПодключение к базе данных успешно")
+
+    # Получаем все данные из таблицы patsiendid
     cursor.execute("SELECT * FROM patsiendid")
     patsiendid=cursor.fetchall()
 
     cursor.execute("SELECT * FROM kasutajad")
     kasutajad=cursor.fetchall()
 
-    conn.close()
-
-
-# Выводит данные таблиц из базы данных в терминале (для себя)
-def print_patsiendid():
-    # Печатаем все строки таблицы patsiendid в консоль
     if not patsiendid:
         print("\nТаблица 'patsiendid' пуста")
     else:
         print("\nAndmed tabelist patsiendid:")
         for patient in patsiendid:
-            print(patient)  # Выводим каждую строку (пациента) в консоль
+            print(patient)
 
-    # Печатаем все строки таблицы kasutajad в консоль
     if not kasutajad:
         print("\nТаблица 'kasutajad' пуста")
     else:
         print("\n\nAndmed tabelist kasutajad:")
         for kasutaja in kasutajad:
-            print(kasutaja)  # Выводим каждую строку (пользователя) в консоль
+            print(kasutaja) 
+
+    conn.close()
 
 
 # Форма для входа для медсестер и врачей
@@ -75,15 +67,15 @@ def sisselogimine_kasutaja():
     kasutajanimi=sisend_kasutajanimi.get()
     parool=sisend_parool.get()
 
-    # Поиск пользователя среди загруженных данных
-    kasutaja=None
-    for kasutaja in kasutajad:
-        if kasutaja[1]==kasutajanimi and kasutaja[2]==parool: # 1 - kasutajanimi", 2 - parool
-            kasutaja=kasutaja
-            break
+    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    cursor=conn.cursor()
+
+    cursor.execute("SELECT nimi, amet FROM kasutajad WHERE kasutajanimi=? AND parool=?", (kasutajanimi, parool))
+    kasutaja=cursor.fetchone()
+    conn.close()
 
     if kasutaja:
-        nimi, amet = kasutaja[4], kasutaja[3]   # 4 - nimi, 3 - amet
+        nimi, amet=kasutaja
         messagebox.showinfo("Tere tulemast!", f"Tere tulemast, {nimi}! \n\nSisse logitud kui {amet}")
 
         aken_login.destroy()  # Закрываем окно входа
@@ -128,7 +120,7 @@ def patsiendide_andmed(nimi, amet):
     osakond_nupp=tk.Button(nupude_frame, text="Kuva oskond", command=osakond_aken)
     osakond_nupp.pack(pady=10)
 
-    if amet=="arst":  # Если пользователь - врач, добавляем кнопку фильтрации по его пациентам
+    if amet=="arst":  # Если пользователь - врач, добавляем кнопку фильтрации
         filter_nupp=tk.Button(nupude_frame, text="Minu patsiendid", command=lambda: load_data_from_db(tree, arst_nimi=nimi))
         filter_nupp.pack(pady=10)
 
@@ -174,7 +166,7 @@ def patsiendide_andmed(nimi, amet):
 
 # --- Подробная информация о пациенте (при двойном клике на пациента) -------------------------------
 def valitud_patsient(tree):
-    global patsiendi_info
+    global patsiendi_info, patient_data
 
     valik=tree.selection()
     if not valik:
@@ -182,57 +174,70 @@ def valitud_patsient(tree):
 
     # Получаем данные из выбранной строки
     values=tree.item(valik, "values")
-    isikukood=values[2]  # индекс 2 - это столбец "Isikukood"
+    isikukood=values[2]  # Индекс 2 - это столбец "Isikukood"
 
-    # Ищем пациента в глобальном списке пациентов
-    for patsient in patsiendid:
-        if patsient[4] == isikukood:
-            break  # если пациент найден, прерываем цикл
-    else:
+    # Подключаемся к базе данных и получаем данные пациента
+    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    cursor=conn.cursor()
+
+    cursor.execute("""
+        SELECT eesnimi, perekonnanimi, email, isikukood, kaal, pikkus, 
+        ylemineRohk, madalamRohk, temperatuur, kaebus, dieet, palati_nr, arst_ID, staatus 
+        FROM patsiendid WHERE isikukood = ?
+    """, (isikukood,))
+    patient_data=cursor.fetchone()
+    
+    conn.close()
+
+    if not patient_data:
         messagebox.showerror("Viga", "Patsiendi andmeid ei leitud!")
         return
 
     # Открываем новое окно с информацией о пациенте
-    patsiendi_info_aken=tk.Toplevel()
-    patsiendi_info_aken.title("Patsiendi andmed")
-    patsiendi_info_aken.geometry("400x600")
+    patsiendi_info=tk.Toplevel()
+    patsiendi_info.title("Patsiendi andmed")
+    patsiendi_info.geometry("400x600")
 
     labels=["Eesnimi", "Perekonnanimi", "E-mail", "Isikukood", "Sünniaeg", "Sugu", "Kaal (kg)", 
               "Pikkus (cm)", "Ülemine rõhk", "Alumine rõhk", "Temperatuur", 
-              "Kaebus", "Dieet", "Diagnoos", "Registeerimise aeg", "Palati nr", "Arst", "Staatus"]
+              "Kaebus", "Dieet", "Palati nr", "Arst", "Staatus"]
     
     # Извлекаем имя врача по ID
-    arst_id=patsient[16]
-    arst_nimi="Määramata"  # если не нашли, ставим значение по умолчанию
-    for k in kasutajad:
-        if k[0]==arst_id:  # проверяем, совпадает ли ID врача
-            arst_nimi=k[4]  
-            break
+    arst_id=patient_data[11]
+    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    cursor=conn.cursor()
+    cursor.execute("SELECT nimi FROM kasutajad WHERE ID = ?", (arst_id,))
+    arst_nimi=cursor.fetchone()
+    conn.close()
+
+    if arst_nimi:
+        arst_nimi=arst_nimi[0]
+    else:
+        arst_nimi = "Määramata"
 
     # Вычисляем дату рождения и возраст с помощью импортированного модуля проверки исикукода
     synniaeg=leia_synniaeg(isikukood)
     sugu=leia_sugu(isikukood)
 
-    patsient=list(patsient)  # Конвертируем данные пациента в список для изменения
-    patsient.insert(5, synniaeg.strftime("%d.%m.%Y"))  # Вставляем дату рождения
-    patsient.insert(6, sugu)  # Вставляем пол
-    patsient[12]=arst_nimi # Заменяем ID врача на его имя
+    patient_data=list(patient_data)
+    patient_data[12]=arst_nimi  # Заменяем ID врача на имя
+    patient_data.insert(4, synniaeg.strftime("%d.%m.%Y"))  # Дата рождения
+    patient_data.insert(5, sugu)  # Возраст
 
     # Вывод данных в новом окне
     for i, label in enumerate(labels):
-        tk.Label(patsiendi_info_aken, text=label + ":", font=("Arial", 10, "bold")).grid(row=i, column=0, sticky="w", padx=10, pady=5)
-        tk.Label(patsiendi_info_aken, text=str(patsient[i+1]), font=("Arial", 10)).grid(row=i, column=1, sticky="w", padx=10, pady=5)
+        tk.Label(patsiendi_info, text=label + ":", font=("Arial", 10, "bold")).grid(row=i, column=0, sticky="w", padx=10, pady=5)
+        tk.Label(patsiendi_info, text=str(patient_data[i]), font=("Arial", 10)).grid(row=i, column=1, sticky="w", padx=10, pady=5)
 
 
-    # Если роль врача и статус "В ожидании осмотра врача" --> появляется кнопка для добавления эпикриза
-    epikriis_nupp=tk.Button(patsiendi_info_aken, text="Lisa epikriis", command=lambda: lisa_epikriis(isikukood))
+    # Если роль врача и статус "В ожидании осмотра врача" --> показываем кнопку для добавления 
+    epikriis_nupp=tk.Button(patsiendi_info, text="Lisa epikriis", command=lambda: lisa_epikriis(isikukood))
     if amet=="arst":
         epikriis_nupp.grid(row=len(labels)+ 1, column=0, columnspan=1, padx=5, pady=10)
 
-    # Если роль врача и статус "Осмотрен врачом" --> появляется кнопка для выписки пациента из больницы
-    valja_kirjutada_nupp=tk.Button(patsiendi_info_aken, text="Välja kirjutada", command=on_update)
-    staatus=patsient[15] 
-    if amet=="arst" and  staatus=="Arsti poolt läbivaadatud":
+    valja_kirjutada_nupp=tk.Button(patsiendi_info, text="Välja kirjutada", command=on_update)
+    staatus=patient_data[15]
+    if amet=="arst" and  staatus=="Ravitud arstilt":
         valja_kirjutada_nupp.grid(row=len(labels)+ 1, column=1, columnspan=1, padx=5, pady=10)
 
 
@@ -240,46 +245,46 @@ def valitud_patsient(tree):
 def lisa_epikriis(isikukood):
     if patsiendi_info:   
         patsiendi_info.destroy() 
-    epikriis_aken=tk.Tk()
-    epikriis_aken.title("Epikriis")
-    epikriis_aken.geometry("400x300")
+    epikriz_aken=tk.Tk()
+    epikriz_aken.title("Epikriis")
+    epikriz_aken.geometry("400x300")
 
-    tk.Label(epikriis_aken, text="Diagnoos:").pack(pady=10)
-    diagnoos_entry = tk.Entry(epikriis_aken, width=40)
+    tk.Label(epikriz_aken, text="Diagnoos:").pack(pady=10)
+    diagnoos_entry=tk.Entry(epikriz_aken, width=40)
     diagnoos_entry.pack(pady=10)
 
-    tk.Label(epikriis_aken, text="Kommentaar:").pack(pady=10)
-    kommentaar_text = tk.Text(epikriis_aken, height=6, width=40)
+    tk.Label(epikriz_aken, text="Kommentaar:").pack(pady=10)
+    kommentaar_text=tk.Text(epikriz_aken, height=6, width=40)
     kommentaar_text.pack(pady=10)
 
     # Кнопка для сохранения эпикриза и изменения статуса
-    def save_epikriz():
+    def salvesta_epikriis():
         diagnoos=diagnoos_entry.get()
-        kommentaar=kommentaar_text.get("1.0", tk.END).strip()
+        kommentaar = kommentaar_text.get("1.0", tk.END).strip()
 
         if diagnoos=="" or kommentaar=="":
             messagebox.showerror("Viga", "Diagnoos ja kommentaar on kohustuslikud!")
             return
 
         # Обновляем статус пациента и добавляем эпикриз
-        conn = sqlite3.connect("Arvestus/AppData/haigla.db")
-        cursor = conn.cursor()
+        conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+        cursor=conn.cursor()
         cursor.execute("""
             UPDATE patsiendid 
             SET diagnoos = ?, staatus = ? 
             WHERE isikukood = ?
-        """, (diagnoos, "Arsti poolt läbivaadatud", isikukood))
+        """, (diagnoos, "Ravitud arstilt", isikukood))
         conn.commit()
         conn.close()
 
         messagebox.showinfo("Edu", "Epikriis on salvestatud ja staatus muudetud!")
-        epikriis_aken.destroy()
+        epikriz_aken.destroy()
 
-    save_button = tk.Button(epikriis_aken, text="Salvesta epikriis", command=save_epikriz)
+    save_button=tk.Button(epikriz_aken, text="Salvesta epikriis", command=salvesta_epikriis)
     save_button.pack(pady=20)
 
 
-# --- Выписка пациента ----------------------------------------------
+# --- Выписка пациента ---
 def on_update():
     selected_item=tree.selection()  # выбранный ряд
     if selected_item:
@@ -304,7 +309,7 @@ def patsiendi_valja_kirjutamine(isikukood):
     paevad_haiglas.pack(padx=10, pady=10)
 
     # Кнопка для отправки советов
-    tk.Button(valja_kirjutamine_aken, text="Välj kitjutada ja saada", command=lambda: saada_kiri(isikukood)).pack(pady=10)
+    tk.Button(valja_kirjutamine_aken, text="Saada kiri", command=lambda: saada_kiri(isikukood)).pack(pady=10)
 
 
 # --- Оплата за кол-во дней в больнице (ссылка прикрепляется к тексту письма)
@@ -351,13 +356,13 @@ def create_payment():
 
 # Отправка письма (с советами и назначением лечения от врача + ссылка на оплату количества проведенных дней в больнице)
 def saada_kiri(isikukood):
-    selected_item = tree.selection()  # Võta valitud rida
+    selected_item = tree.selection() 
     if selected_item:
-        email = patsiendid[3]
-        isikukood = patsiendid[4]
+        email = patient_data[2]
+        isikukood = patient_data[3]
 
         payment_link = create_payment()
-        kiri=advice_text.get("1.0","end")+f"\nДля оплаты услуг перейдите по ссылке: {payment_link}"
+        kiri=advice_text.get("1.0","end")+f"\nДля оплаты услуг перейдите по ссылке: {payment_link}"  # домашнее лечение + ссылка на оплату
 
         smtp_server="smtp.gmail.com"
         port=587
@@ -368,7 +373,7 @@ def saada_kiri(isikukood):
         msg.set_content(kiri) 
         msg['Subject']="Koduravi ja arve"
         msg['From']=f"LuumHaigla - Arst {nimi}"
-        msg['To']=email 
+        msg['To']=email  
         try:
             server=smtplib.SMTP(smtp_server,port)
             server.starttls(context=context)
@@ -377,7 +382,7 @@ def saada_kiri(isikukood):
             messagebox.showinfo("Informatsioon","Kiri oli saadetud")
 
             tree.delete(selected_item)  # Удалить пациента из таблицы, после отправки письма
-            conn = sqlite3.connect("Arvestus/AppData/haigla.db")
+            conn = sqlite3.connect("10. Arvestus/AppData/haigla.db")
             cursor = conn.cursor()
             cursor.execute("DELETE FROM patsiendid WHERE isikukood=?", (isikukood,))
             conn.commit()
@@ -421,6 +426,7 @@ def validate_data():
     if "@" not in email or "." not in email:
         tk.messagebox.showerror("Viga", "E-mail peab olema korrektne!")
         return False
+
     # Проверка искикода
     teade=kontrolli_ikood(isikukood)
     if teade is not True:
@@ -439,6 +445,7 @@ def clear_entries():
             entry.delete("1.0", tk.END)
         elif isinstance(entry, tk.BooleanVar):  # Сброс чекбоксов
             entry.set(False)
+
 
 # Добавление пациента
 def lisa_patsient():
@@ -485,7 +492,7 @@ def lisa_patsient():
 
         elif label=="Arst":
             # Извлекаем список врачей с их ID и именами
-            conn=sqlite3.connect("Arvestus/AppData/haigla.db")  # Открываем соединение с базой данных
+            conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")  # Открываем соединение с базой данных
             cursor=conn.cursor()
             cursor.execute("SELECT id, nimi FROM kasutajad WHERE amet='arst'")
             arstid=cursor.fetchall()
@@ -538,6 +545,7 @@ def lisa_patsient():
 
     lisa_patsient_aken.mainloop()
 
+# Для определения выбранной диеты
 def valitud_dieet():
     dieet_baas=entries["Dieet_baas"].get()
     dieet_diabeet=entries["Dieet_diabeet"].get()
@@ -555,21 +563,28 @@ def valitud_dieet():
     return ", ".join(selected_dieet)
 
 
+
 def saada_arsti_id():
     # Получаем имя врача, выбранного в комбобоксе
     valitud_arst=entries["Arst"].get()
+    connection=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    cursor=connection.cursor()
 
-    # Ищем врача в списке kasutajad
-    for arst in kasutajad:
-        if arst[4]==valitud_arst:  
-            return arst[0] # Возвращаем ID врача
+    cursor.execute("SELECT id FROM kasutajad WHERE nimi=?", (valitud_arst,))
+    arst_id=cursor.fetchone()
 
-    return None
+    connection.close()
+
+    if arst_id:
+        return arst_id[0] # Возвращаем ID врача
+    else:
+        return None
+
 
 # Проверяет данные и добавляет их в базу данных
 def insert_data():
     if validate_data():
-        connection=sqlite3.connect("Arvestus/AppData/haigla.db")
+        connection=sqlite3.connect("10. Arvestus/AppData/haigla.db")
         cursor=connection.cursor()
 
         cursor.execute("""
@@ -605,13 +620,13 @@ def on_search():
 
 #Функция, которая загружает данные из базы данных SQLite и вставляет их в таблицу
 def load_data_from_db(tree, search_query="", arst_nimi=None):
-    # Очищает таблицу Treeview перед добавлением новых данных
+    # Puhasta Treeview tabel enne uute andmete lisamist
     for item in tree.get_children():
         tree.delete(item)
-   
-    conn=sqlite3.connect("Arvestus/AppData/haigla.db")
+    # Loo ühendus SQLite andmebaasiga
+    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
-    # Делает запрос к базе данных для получения данных
+    # Tee päring andmebaasist andmete toomiseks
     if arst_nimi:  # Фильтрация пациентов по имени врача
         cursor.execute("SELECT p.eesnimi, p.perekonnanimi, p.isikukood, p.registreerimiseAeg, p.palati_nr, k.nimi AS arst_nimi, p.diagnoos, p.staatus FROM patsiendid p LEFT JOIN kasutajad k ON p.arst_ID = k.id WHERE k.nimi = ?",(arst_nimi,))
     elif search_query:
@@ -637,30 +652,31 @@ def osakond_aken():
 
     osakond_aken=tk.Toplevel(peamine_aken)
     osakond_aken.title("Oskonna kaart")
-    osakond_aken.geometry("400x400")
+    osakond_aken.geometry("400x500")
 
     # Отображения информации о выбранной палате
     info_label=tk.Label(osakond_aken, text="Valige palat, et kuvada patsiendid", anchor="w", justify="left")
     info_label.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
     def naita_patsiendi_info(palati_nr):
-        patsiendid_palatis=[
-        (patsient[1], patsient[2], patsient[4])  # имя, фамилия, isikukood
-        for patsient in patsiendid
-        if patsient[14]==palati_nr  # Предположим, что палата указана в 15-м столбце
-        ]
+        # Получаем список пациентов в выбранной палате
+        conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+        cursor=conn.cursor()
+        cursor.execute('''SELECT eesnimi, perekonnanimi, isikukood 
+                          FROM patsiendid WHERE palati_nr = ?''', (palati_nr,))
+        patsiendid=cursor.fetchall()
 
         # Формируем строку для отображения информации о пациентах
-        if len(patsiendid_palatis)>0:
+        if len(patsiendid)>0:
             patsiendi_info="" 
         # Проходим по каждому пациенту
-            for p in patsiendid_palatis:
-                patsiendi_info+="\n"+p[0]+" "+p[1]+" - "+p[2]+"\n" # имя, фамилия, исикукод
+            for p in patsiendid:
+                patsiendi_info=patsiendi_info+p[0]+" "+p[1]+"\n"+p[2]+"\n" # имя, фамилия, исикукод
         else:
-             patsiendi_info="\nEi ole patsiente selles palatis"
+             patsiendi_info="Ei ole patsiente selles palatis"
 
         # Обновляем метку с информацией о пациентах
-        info_label.config(text=f"Palat nr {palati_nr}:\n{patsiendi_info}")
+        info_label.config(text=f"Palat {palati_nr}:\n{patsiendi_info}")
 
     rows=[0,0,0,1,1,1]  # строки для каждой палаты
     cols=[0,1,2,0,1,2]  # колонки для каждой палаты
@@ -669,16 +685,17 @@ def osakond_aken():
         row=rows[i]  
         col=cols[i] 
 
-        patsiendid_palatis=[
-        (patsient[1], patsient[2], patsient[4]) 
-        for patsient in patsiendid
-        if patsient[14]==i + 1 
-        ]
+        # Получаем список пациентов в палате
+        conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+        cursor=conn.cursor()
+        cursor.execute('''SELECT eesnimi, perekonnanimi, isikukood 
+                            FROM patsiendid WHERE palati_nr = ?''', (i + 1,))
+        patsiendid=cursor.fetchall()
 
         # В зависимости от количества пациентов меняем цвет
-        if len(patsiendid_palatis)==4:
+        if len(patsiendid)==4:
             varv="red"  # Палата полностью занята
-        elif len(patsiendid_palatis)>=2:
+        elif len(patsiendid)>=2:
             varv="yellow"  # 2 или 3 пациента
         else:
             varv="green"  # 1 или 0 пациента
@@ -693,5 +710,4 @@ def osakond_aken():
 
 
 
-db_data()
 sisselogimine_aken()

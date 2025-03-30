@@ -5,7 +5,7 @@
     <ProjectGuid>607bddbe-9986-4a59-8f53-a5e8cbc03913</ProjectGuid>
     <ProjectHome>
     </ProjectHome>
-    <StartupFile>Arvestus\Arvestustöö - HaiglaAssist.py</StartupFile>
+    <StartupFile>10. Arvestus\Arvestustöö - HaiglaAssist.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -22,8 +22,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Arvestus\db_funktsioonid.py" />
-    <Compile Include="Arvestus\Isikukood_Modul.py" />
+    <Compile Include="10. Arvestus\db_funktsioonid.py" />
+    <Compile Include="10. Arvestus\Isikukood_Modul.py" />
     <Compile Include="2. Tingimuslik operaator IF\2.3. Iseseisevtöö-Valiklaused %28Ruutvõrrand%29.py" />
     <Compile Include="1. Lineaarsed programmid\1.1. Tund %28Math_Random_print_input%29.py" />
     <Compile Include="1. Lineaarsed programmid\1. Tund %28Datetime_Try_except%29.py" />
@@ -60,13 +60,13 @@
     <Compile Include="9. Töö andmebaasiga %28SQlite3%29\9. Tund %28SQlite3%29.py" />
     <Compile Include="9. Töö andmebaasiga %28SQlite3%29\9.1. Andmebaas Tkinteris.py" />
     <Compile Include="9. Töö andmebaasiga %28SQlite3%29\9.2. Tabeli struktuuri loomine.py" />
-    <Compile Include="Arvestus\Arvestustöö - HaiglaAssist.py" />
+    <Compile Include="10. Arvestus\Arvestustöö - HaiglaAssist.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Arvestus\AppData\haigla.db" />
-    <Content Include="Arvestus\hospital %281%29.png" />
-    <Content Include="Arvestus\hospital.png" />
-    <Content Include="Arvestus\pngwing.com.png" />
+    <Content Include="10. Arvestus\AppData\haigla.db" />
+    <Content Include="10. Arvestus\hospital %281%29.png" />
+    <Content Include="10. Arvestus\hospital.png" />
+    <Content Include="10. Arvestus\pngwing.com.png" />
     <Content Include="2. Tingimuslik operaator IF\2.1. Plokkskeem _Ülesanne 9 - Ruut_.pdf" />
     <Content Include="2. Tingimuslik operaator IF\2.2. Plokkskeem _Ülesanne 10 - Matemaatika_.pdf" />
     <Content Include="5. Kasutajate funktsioonid %28Def%29\Tund6_Modul.py" />
@@ -89,7 +89,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="1. Lineaarsed programmid\" />
-    <Folder Include="Arvestus\AppData\" />
+    <Folder Include="10. Arvestus\AppData\" />
     <Folder Include="2. Tingimuslik operaator IF\" />
     <Folder Include="3. Kordused\" />
     <Folder Include="4. Järjend %28List%29\" />
@@ -99,7 +99,7 @@
     <Folder Include="8. Graafiline liides %28Tkinter ja Matplotlib%29\" />
     <Folder Include="9. Töö andmebaasiga %28SQlite3%29\" />
     <Folder Include="9. Töö andmebaasiga %28SQlite3%29\AppData\" />
-    <Folder Include="Arvestus\" />
+    <Folder Include="10. Arvestus\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
