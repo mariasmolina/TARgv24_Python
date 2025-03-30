@@ -16,7 +16,7 @@ def db_data():
     global patsiendid, kasutajad
 
     # Подключение к базе данных
-    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
 
     # Получаем все данные из таблиц
@@ -262,7 +262,7 @@ def lisa_epikriis(isikukood):
             return
 
         # Обновляем статус пациента и добавляем эпикриз
-        conn = sqlite3.connect("10. Arvestus/AppData/haigla.db")
+        conn = sqlite3.connect("Arvestus/AppData/haigla.db")
         cursor = conn.cursor()
         cursor.execute("""
             UPDATE patsiendid 
@@ -377,7 +377,7 @@ def saada_kiri(isikukood):
             messagebox.showinfo("Informatsioon","Kiri oli saadetud")
 
             tree.delete(selected_item)  # Удалить пациента из таблицы, после отправки письма
-            conn = sqlite3.connect("10. Arvestus/AppData/haigla.db")
+            conn = sqlite3.connect("Arvestus/AppData/haigla.db")
             cursor = conn.cursor()
             cursor.execute("DELETE FROM patsiendid WHERE isikukood=?", (isikukood,))
             conn.commit()
@@ -485,7 +485,7 @@ def lisa_patsient():
 
         elif label=="Arst":
             # Извлекаем список врачей с их ID и именами
-            conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")  # Открываем соединение с базой данных
+            conn=sqlite3.connect("Arvestus/AppData/haigla.db")  # Открываем соединение с базой данных
             cursor=conn.cursor()
             cursor.execute("SELECT id, nimi FROM kasutajad WHERE amet='arst'")
             arstid=cursor.fetchall()
@@ -569,7 +569,7 @@ def saada_arsti_id():
 # Проверяет данные и добавляет их в базу данных
 def insert_data():
     if validate_data():
-        connection=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+        connection=sqlite3.connect("Arvestus/AppData/haigla.db")
         cursor=connection.cursor()
 
         cursor.execute("""
@@ -609,7 +609,7 @@ def load_data_from_db(tree, search_query="", arst_nimi=None):
     for item in tree.get_children():
         tree.delete(item)
    
-    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
     # Делает запрос к базе данных для получения данных
     if arst_nimi:  # Фильтрация пациентов по имени врача

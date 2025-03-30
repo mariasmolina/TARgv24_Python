@@ -1,6 +1,6 @@
 import sqlite3
 
-conn = sqlite3.connect("10. Arvestus/AppData/haigla.db")
+conn = sqlite3.connect("Arvestus/AppData/haigla.db")
 cursor = conn.cursor()
 
 cursor.execute('''CREATE TABLE IF NOT EXISTS kasutajad (
