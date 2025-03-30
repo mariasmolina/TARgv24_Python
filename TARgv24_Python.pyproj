@@ -22,6 +22,8 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="10. Arvestus\db_funktsioonid.py" />
+    <Compile Include="10. Arvestus\Isikukood_Modul.py" />
     <Compile Include="2. Tingimuslik operaator IF\2.3. Iseseisevtöö-Valiklaused %28Ruutvõrrand%29.py" />
     <Compile Include="1. Lineaarsed programmid\1.1. Tund %28Math_Random_print_input%29.py" />
     <Compile Include="1. Lineaarsed programmid\1. Tund %28Datetime_Try_except%29.py" />
@@ -62,6 +64,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="10. Arvestus\AppData\haigla.db" />
+    <Content Include="10. Arvestus\hospital %281%29.png" />
+    <Content Include="10. Arvestus\hospital.png" />
+    <Content Include="10. Arvestus\pngwing.com.png" />
     <Content Include="2. Tingimuslik operaator IF\2.1. Plokkskeem _Ülesanne 9 - Ruut_.pdf" />
     <Content Include="2. Tingimuslik operaator IF\2.2. Plokkskeem _Ülesanne 10 - Matemaatika_.pdf" />
     <Content Include="5. Kasutajate funktsioonid %28Def%29\Tund6_Modul.py" />
