@@ -10,7 +10,7 @@ from email.message import EmailMessage
 # Выводит данные таблиц из базы данных в терминале (для себя)
 def print_patsiendid():
     # Подключение к базе данных
-    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
 
     # Проверка успешного соединения
@@ -67,7 +67,7 @@ def sisselogimine_kasutaja():
     kasutajanimi=sisend_kasutajanimi.get()
     parool=sisend_parool.get()
 
-    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
 
     cursor.execute("SELECT nimi, amet FROM kasutajad WHERE kasutajanimi=? AND parool=?", (kasutajanimi, parool))
@@ -177,7 +177,7 @@ def valitud_patsient(tree):
     isikukood=values[2]  # Индекс 2 - это столбец "Isikukood"
 
     # Подключаемся к базе данных и получаем данные пациента
-    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
 
     cursor.execute("""
@@ -204,7 +204,7 @@ def valitud_patsient(tree):
     
     # Извлекаем имя врача по ID
     arst_id=patient_data[11]
-    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
     cursor.execute("SELECT nimi FROM kasutajad WHERE ID = ?", (arst_id,))
     arst_nimi=cursor.fetchone()
@@ -267,7 +267,7 @@ def lisa_epikriis(isikukood):
             return
 
         # Обновляем статус пациента и добавляем эпикриз
-        conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+        conn=sqlite3.connect("Arvestus/AppData/haigla.db")
         cursor=conn.cursor()
         cursor.execute("""
             UPDATE patsiendid 
@@ -382,7 +382,7 @@ def saada_kiri(isikukood):
             messagebox.showinfo("Informatsioon","Kiri oli saadetud")
 
             tree.delete(selected_item)  # Удалить пациента из таблицы, после отправки письма
-            conn = sqlite3.connect("10. Arvestus/AppData/haigla.db")
+            conn = sqlite3.connect("Arvestus/AppData/haigla.db")
             cursor = conn.cursor()
             cursor.execute("DELETE FROM patsiendid WHERE isikukood=?", (isikukood,))
             conn.commit()
@@ -492,7 +492,7 @@ def lisa_patsient():
 
         elif label=="Arst":
             # Извлекаем список врачей с их ID и именами
-            conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")  # Открываем соединение с базой данных
+            conn=sqlite3.connect("Arvestus/AppData/haigla.db")  # Открываем соединение с базой данных
             cursor=conn.cursor()
             cursor.execute("SELECT id, nimi FROM kasutajad WHERE amet='arst'")
             arstid=cursor.fetchall()
@@ -567,7 +567,7 @@ def valitud_dieet():
 def saada_arsti_id():
     # Получаем имя врача, выбранного в комбобоксе
     valitud_arst=entries["Arst"].get()
-    connection=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    connection=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=connection.cursor()
 
     cursor.execute("SELECT id FROM kasutajad WHERE nimi=?", (valitud_arst,))
@@ -584,7 +584,7 @@ def saada_arsti_id():
 # Проверяет данные и добавляет их в базу данных
 def insert_data():
     if validate_data():
-        connection=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+        connection=sqlite3.connect("Arvestus/AppData/haigla.db")
         cursor=connection.cursor()
 
         cursor.execute("""
@@ -624,7 +624,7 @@ def load_data_from_db(tree, search_query="", arst_nimi=None):
     for item in tree.get_children():
         tree.delete(item)
     # Loo ühendus SQLite andmebaasiga
-    conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+    conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
     # Tee päring andmebaasist andmete toomiseks
     if arst_nimi:  # Фильтрация пациентов по имени врача
@@ -660,7 +660,7 @@ def osakond_aken():
 
     def naita_patsiendi_info(palati_nr):
         # Получаем список пациентов в выбранной палате
-        conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+        conn=sqlite3.connect("Arvestus/AppData/haigla.db")
         cursor=conn.cursor()
         cursor.execute('''SELECT eesnimi, perekonnanimi, isikukood 
                           FROM patsiendid WHERE palati_nr = ?''', (palati_nr,))
@@ -686,7 +686,7 @@ def osakond_aken():
         col=cols[i] 
 
         # Получаем список пациентов в палате
-        conn=sqlite3.connect("10. Arvestus/AppData/haigla.db")
+        conn=sqlite3.connect("Arvestus/AppData/haigla.db")
         cursor=conn.cursor()
         cursor.execute('''SELECT eesnimi, perekonnanimi, isikukood 
                             FROM patsiendid WHERE palati_nr = ?''', (i + 1,))
