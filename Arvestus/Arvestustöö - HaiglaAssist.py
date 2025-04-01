@@ -187,7 +187,7 @@ def patsiendide_andmed(nimi, amet):
     search_button=CTkButton(search_frame, text="Otsi", command=on_search, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
     search_button.pack(side=tk.LEFT, padx=10)
 
-    refresh_button=CTkButton(search_frame, text="Värskenda tabel", command=refresh_table, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
+    refresh_button=CTkButton(search_frame, text="Värskenda tabel", command=lambda:load_data_from_db(tree), fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
     refresh_button.pack(side=tk.LEFT, padx=10)
     
     # Таблица
@@ -763,8 +763,6 @@ def insert_data():
 
 
 # --- Поиск и обновить -------------------------------------------------------------------
-def refresh_table():
-    load_data_from_db(tree)
 
 def on_search():
     search_query=search_entry.get()
