@@ -122,7 +122,7 @@ def patsiendide_andmed(nimi, amet):
 
     peamine_aken=ThemedTk(theme="adapta") # Использовала модуль с темой
     peamine_aken.title("Haigla Assist")
-    peamine_aken.geometry("1200x500")
+    peamine_aken.geometry("1250x500")
     peamine_aken.configure(background="#55b3d9")
     peamine_aken.resizable(0,0)
 
@@ -141,7 +141,7 @@ def patsiendide_andmed(nimi, amet):
     osakond_nupp=CTkButton(nupude_frame, text="📋 Kuva osakond", command=osakond_aken, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
     osakond_nupp.pack(pady=10, ipady=5)
     
-    if amet == "arst":
+    if amet=="arst":
         filter_nupp=CTkButton(nupude_frame, text="👥 Minu patsiendid", command=lambda: load_data_from_db(tree, arst_nimi=nimi), fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
         filter_nupp.pack(pady=(10,0), ipady=5)
     
@@ -153,7 +153,7 @@ def patsiendide_andmed(nimi, amet):
     frame.pack(pady=20, side="left", expand=True, fill="both")
 
     # Верхняя информационная панель
-    info_frame = CTkFrame(frame, fg_color="white", height=50)
+    info_frame=CTkFrame(frame, fg_color="white", height=50)
     info_frame.pack(fill="x")
     
     tanane_kuupaev=datetime.today().strftime('%d.%m.%Y')
@@ -222,7 +222,7 @@ def patsiendide_andmed(nimi, amet):
     tree.column("Registreerimise aeg", width=110)
     tree.column("Palati nr", width=50)
     tree.column("Arst", width=100)
-    tree.column("Diagnoos", width=150)
+    tree.column("Diagnoos", width=200)
     tree.column("Staatus", width=130)
 
     # Загружаем данные из базы данных
@@ -250,7 +250,7 @@ def valitud_patsient(tree):
 
     cursor.execute("""
         SELECT eesnimi, perekonnanimi, email, isikukood, kaal, pikkus, 
-        ylemine_rohk, madalam_rohk, temperatuur, kaebus, dieet, palati_nr, arst_ID, staatus 
+        ylemine_rohk, madalam_rohk, temperatuur, dieet, palati_nr, arst_ID, staatus, diagnoos 
         FROM patsiendid WHERE isikukood = ? 
         """, (isikukood,))
     patient_data=cursor.fetchone()
@@ -264,7 +264,7 @@ def valitud_patsient(tree):
     # Открываем новое окно с информацией о пациенте
     patsiendi_info=CTkToplevel(peamine_aken)
     patsiendi_info.title("Patsiendi andmed")
-    patsiendi_info.geometry("400x630")
+    patsiendi_info.geometry("400x600")
     patsiendi_info.resizable(0,0)
 
     # Cоздаём вкладочный интерфейс (notebook)
@@ -277,12 +277,10 @@ def valitud_patsient(tree):
     info_frame=ttk.Frame(notebook)
     notebook.add(info_frame, text="Andmed")
 
-    labels=["Eesnimi", "Perekonnanimi", "E-mail", "Isikukood", "Sünniaeg", "Sugu", "Kaal (kg)", 
-              "Pikkus (cm)", "Ülemine rõhk", "Alumine rõhk", "Temperatuur", 
-              "Kaebus", "Dieet", "Palati nr", "Arst", "Staatus"]
+    labels=["Eesnimi", "Perekonnanimi", "E-mail", "Isikukood", "Sünniaeg", "Sugu", "Kaal (kg)", "Pikkus (cm)", "Ülemine rõhk", "Alumine rõhk", "Temperatuur", "Dieet", "Palati nr", "Arst", "Staatus"]
     
     # Извлекаем имя врача по ID
-    arst_id=patient_data[12]
+    arst_id=patient_data[11]
     conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
     cursor.execute("""
@@ -303,7 +301,7 @@ def valitud_patsient(tree):
     sugu=leia_sugu(isikukood)
 
     patient_data=list(patient_data)
-    patient_data[12]=arst_nimi  # Заменяем ID врача на имя
+    patient_data[11]=arst_nimi  # Заменяем ID врача на имя
     patient_data.insert(4, synniaeg.strftime("%d.%m.%Y"))  # Дата рождения
     patient_data.insert(5, sugu)  # Возраст
 
@@ -315,20 +313,19 @@ def valitud_patsient(tree):
     # Если роль врача и статус "В ожидании осмотра врача" --> показываем кнопку для добавления эпикриза
     epikriis_nupp=CTkButton(info_frame, text="📌 Lisa epikriis", command=lambda: lisa_epikriis(isikukood), fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
     if amet=="arst":
-        epikriis_nupp.grid(row=len(labels)+ 1, column=0, rowspan=1, padx=10, pady=(30,10))
+        epikriis_nupp.grid(row=len(labels)+ 1, column=0, rowspan=1, padx=10, pady=30)
 
     # Если роль врача и статус "Осмотрен врачем" --> показываем кнопку для возможности выписки пациента
     valja_kirjutada_nupp=CTkButton(info_frame, text="📧 Välja kirjutada", command=on_update, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
-    staatus=patient_data[15]
+    staatus=patient_data[14]
     if amet=="arst" and  staatus=="Arsti poolt läbivaadatud":
-        valja_kirjutada_nupp.grid(row=len(labels)+ 1, column=1, rowspan=1, padx=10, pady=(30,10))
+        valja_kirjutada_nupp.grid(row=len(labels)+ 1, column=1, rowspan=1, padx=10, pady=30)
 
 
     # Вкладка - Päevik
     diary_frame=ttk.Frame(notebook)
     notebook.add(diary_frame, text="Päevik")
 
-    # Создаем одно текстовое поле для всего дневника
     # Контейнер для комментариев
     paevik=tk.Label(diary_frame, width=60, height=20)
     paevik.pack(padx=10, pady=10)
@@ -336,7 +333,7 @@ def valitud_patsient(tree):
     conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
     cursor.execute("""
-    SELECT p.kommentaar, k.nimi AS arst_nimi 
+    SELECT p.kommentaar, p.kaebus, k.nimi AS arst_nimi 
     FROM patsiendid p 
     LEFT JOIN kasutajad k ON p.arst_ID=k.id 
     WHERE p.isikukood = ? AND k.nimi = ? 
@@ -344,13 +341,20 @@ def valitud_patsient(tree):
     diary_entries=cursor.fetchall()
     conn.close()
 
+    print(diary_entries)
+
     for entry in diary_entries:
-            if entry[0]:
-                lisa_text=f"{entry[1]}:\n{entry[0]}\n"
-                diary_text=CTkTextbox(paevik, width=600, height=500, font=("Nunito", 14), text_color="#333333", wrap="word")
-                diary_text.pack(padx=10, pady=10, fill='both', expand=True)
-                diary_text.insert("1.0", lisa_text)
-                diary_text.configure(state="disabled")
+        # Создаем один раз CTkTextbox
+        diary_text=CTkTextbox(paevik, width=600, height=470, font=("Nunito", 14), text_color="#333333", wrap="word")
+        diary_text.pack(padx=10, pady=10, fill='both', expand=True)
+    
+        if entry[0]:  # Если комментарий не пустой
+            lisa_text=f"Kaebus: {entry[1]}\n\n{entry[2]}:\n{entry[0]}\n"
+        else:  # Если комментарий пустой
+            lisa_text=f"Kaebus: {entry[1]}"
+    
+        diary_text.insert("1.0", lisa_text)
+        diary_text.configure(state="disabled")
     
     kommentaar_nupp=CTkButton(diary_frame, text="Lisa kommentaar", command=message, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
     kommentaar_nupp.pack(pady=10)
@@ -398,6 +402,7 @@ def lisa_epikriis(isikukood):
 
         messagebox.showinfo("Edu", "Epikriis on salvestatud ja staatus muudetud!")
         epikriz_aken.destroy()
+
 
     save_button=CTkButton(epikriz_aken, text="Salvesta epikriis", command=salvesta_epikriis, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
     save_button.pack(pady=20)
@@ -487,7 +492,7 @@ def saada_kiri(isikukood):
         isikukood = patient_data[3]
 
         payment_link = create_payment()
-        kiri=koduravi_text.get("1.0","end")+f"\n\nVoodipäevatasu tasumiseks haiglas järgige linki: {payment_link}"  # домашнее лечение + ссылка на оплату
+        kiri="Koduravi: "+koduravi_text.get("1.0","end")+f"\nVoodipäevatasu tasumiseks haiglas järgige linki: {payment_link}"  # домашнее лечение + ссылка на оплату
 
         smtp_server="smtp.gmail.com"
         port=587
@@ -515,7 +520,7 @@ def saada_kiri(isikukood):
         except Exception as e:
             messagebox.showerror("Tekkis viga!",e)
         finally:
-            server.destroy()
+            server.quit()
 
 
 #--- Добавление нового пациента и сохранение в базу данных и таблицу --------------------------------------------------------------
@@ -530,6 +535,7 @@ def validate_data():
     pikkus=entries["Pikkus (cm)"].get()
     temperatuur=entries["Temperatuur"].get()
     kaebus=entries["Kaebus"].get("1.0", tk.END).strip()
+    palat=int(entries["Palati number"].get().strip())
 
     # Получаем значения чекбоксов для диеты
     dieet_baas=entries["Dieet_baas"].get()
@@ -539,14 +545,20 @@ def validate_data():
     if not eesnimi or not perekonnanimi:
         tk.messagebox.showerror("Viga", "Ees- ja Perekonnanimi on kohustuslik!")
         return False
-    if not kaal.isdigit() or not pikkus.isdigit() or not temperatuur.isdigit():
-        tk.messagebox.showerror("Viga", "Sisend peab olema arv!")
-        return False
     if not kaebus:
         tk.messagebox.showerror("Viga", "Kaebus on kohustuslik!")
         return False
     if "@" not in email or "." not in email:
         tk.messagebox.showerror("Viga", "E-mail peab olema korrektne!")
+        return False
+
+    # Проверка, что данные вес, рост, температура - числа
+    try:
+        float(kaal)
+        float(pikkus)
+        float(temperatuur)
+    except:
+        tk.messagebox.showerror("Viga", "Sisend peab olema arv!")
         return False
 
     # Проверка, что хотя бы одна диета выбрана
@@ -562,11 +574,21 @@ def validate_data():
 
     conn=sqlite3.connect("Arvestus/AppData/haigla.db") 
     cursor=conn.cursor()
-    cursor.execute("SELECT COUNT(*) FROM patsiendid WHERE isikukood = ?", (isikukood,))
-    tulemus=cursor.fetchone()
+    cursor.execute("""
+    SELECT 
+        (SELECT COUNT(*) FROM patsiendid WHERE isikukood = ?) AS isikukood_count,
+        (SELECT COUNT(*) FROM patsiendid WHERE palati_nr = ?) AS palati_count 
+        """, (isikukood, palat))
+
+    isikukood_arv, patsientide_arv=cursor.fetchone()
+
+    # Проверяем количество пациентов в палате
+    if patsientide_arv>=4:
+        tk.messagebox.showerror("Viga", f"Palatis {palat} on juba täis!")
+        return False
 
     # Если исикукод уже зарегистрирован, выводим ошибку
-    if tulemus[0]>0:
+    if isikukood_arv>0:
         tk.messagebox.showerror("Viga", "Isikukood on juba registreeritud!")
         conn.close()
         return False
@@ -584,7 +606,7 @@ def clear_entries():
             entry.set("")  # Очистка комбобокса
         elif isinstance(entry, CTkTextbox):
             entry.delete("1.0", tk.END)
-        elif isinstance(entry, CTkSpinbox):  # Сброс чекбоксов
+        elif isinstance(entry, CTkSpinbox):  
             entry.set(0)   # Сброс значения спинбокса на 0
         elif isinstance(entry, IntVar):  # Сброс чекбоксов
             entry.set(0)
@@ -679,6 +701,19 @@ def lisa_patsient():
          # Дата регистрации (сегодняшняя дата)
         today_date=datetime.today().strftime("%Y-%m-%d")
         entries["registreerimise_aeg"]=today_date  # Устанавливаем сегодняшнюю дату
+
+        # Функция для проверки палаты в зависимости от "Isikukood"
+        def check_palati():
+            isikukood=entries["Isikukood"].get()
+            if isikukood and isikukood[0] in ["1","3","5"]:
+                # Показываем только палаты 4, 5, 6
+                entries["Palati number"].configure(values=["4","5","6"])
+            else:
+                # Показываем только палаты 1, 2, 3
+                entries["Palati number"].configure(values=["1","2","3"])
+
+    # Привязываем проверку к изменению значения в поле "Isikukood"
+    entries["Isikukood"].bind("<KeyRelease>", lambda event: check_palati())   # "<KeyRelease>" - когда клавиша на клавиатуре отпускается
 
     # Кнопки сохранения и очистки
     nuppude_frame=tk.Frame(lisa_patsient_aken)
@@ -813,7 +848,7 @@ def osakond_aken():
     osakond_aken.geometry("400x500")
 
     # Отображения информации о выбранной палате
-    info_label=CTkLabel(osakond_aken, text="Valige palat, et kuvada patsiendid", anchor="w", justify="left", font=("Nunito", 16, "bold"))
+    info_label=CTkLabel(osakond_aken, text="Valige palat, et kuvada patsiendid\nNaiste palatid nr: 1 - 3\nMeeste palatid nr: 4 - 6", anchor="w", justify="left", font=("Nunito", 16, "bold"))
     info_label.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
     def naita_patsiendi_info(palati_nr):
@@ -827,15 +862,15 @@ def osakond_aken():
 
         # Формируем строку для отображения информации о пациентах
         if len(patsiendid)>0:
-            patsiendi_info="" 
+            patsiendi_info_palatis="" 
         # Проходим по каждому пациенту
             for p in patsiendid:
-                patsiendi_info+="\n"+p[0]+" "+p[1]+" - "+p[2]+"\n" # имя, фамилия, исикукод
+                patsiendi_info_palatis+="\n"+p[0]+" "+p[1]+" - "+p[2]+"\n" # имя, фамилия, исикукод
         else:
-             patsiendi_info="\nEi ole patsiente selles palatis"
+             patsiendi_info_palatis="\nEi ole patsiente selles palatis"
 
         # Обновляем метку с информацией о пациентах
-        info_label.configure(text=f"Palat nr {palati_nr}:\n{patsiendi_info}", font=("Nunito", 14))
+        info_label.configure(text=f"Palat nr {palati_nr}:\n{patsiendi_info_palatis}", font=("Nunito", 14))
 
     rows=[0,0,0,1,1,1]  # строки для каждой палаты
     cols=[0,1,2,0,1,2]  # колонки для каждой палаты

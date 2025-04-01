@@ -63,7 +63,6 @@
     <Compile Include="Arvestus\Arvestustöö - HaiglaAssist.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Arvestus\AppData\haigla.db" />
     <Content Include="Arvestus\font\Comfortaa-Bold.ttf" />
     <Content Include="Arvestus\font\Comfortaa-Regular.ttf" />
     <Content Include="Arvestus\font\Nunito-Bold.ttf" />
