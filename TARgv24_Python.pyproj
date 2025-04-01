@@ -64,6 +64,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Arvestus\AppData\haigla.db" />
+    <Content Include="Arvestus\font\Comfortaa-Bold.ttf" />
+    <Content Include="Arvestus\font\Comfortaa-Regular.ttf" />
+    <Content Include="Arvestus\font\Nunito-Bold.ttf" />
+    <Content Include="Arvestus\font\Nunito-Regular.ttf" />
     <Content Include="Arvestus\pildid\hospital.png" />
     <Content Include="Arvestus\pildid\login_pilt.png" />
     <Content Include="Arvestus\pildid\smart_id.png" />
@@ -100,6 +104,7 @@
     <Folder Include="9. Töö andmebaasiga %28SQlite3%29\" />
     <Folder Include="9. Töö andmebaasiga %28SQlite3%29\AppData\" />
     <Folder Include="Arvestus\" />
+    <Folder Include="Arvestus\font\" />
     <Folder Include="Arvestus\pildid\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
