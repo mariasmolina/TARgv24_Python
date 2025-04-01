@@ -21,6 +21,7 @@ def kontrolli_ikood(ikood:str):
     # Если все проверки прошли успешно
     return True
 
+
 # Проверка на количество символов
 def kontroll_pikkus(ikood: str) -> bool:
     """Kontrollib isikukoodi pikkust ja sisaldust

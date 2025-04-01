@@ -63,6 +63,7 @@
     <Compile Include="Arvestus\Arvestustöö - HaiglaAssist.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Arvestus\AppData\haigla.db" />
     <Content Include="Arvestus\pildid\hospital.png" />
     <Content Include="Arvestus\pildid\login_pilt.png" />
     <Content Include="Arvestus\pildid\smart_id.png" />
