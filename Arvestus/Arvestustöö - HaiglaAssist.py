@@ -341,7 +341,6 @@ def valitud_patsient(tree):
     diary_entries=cursor.fetchall()
     conn.close()
 
-    print(diary_entries)
 
     for entry in diary_entries:
         # Создаем один раз CTkTextbox
