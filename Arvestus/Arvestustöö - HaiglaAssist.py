@@ -1,37 +1,40 @@
 import tkinter as tk
-import sqlite3, webbrowser, requests, random, json, string, smtplib, ssl
-from tkinter import filedialog, messagebox, ttk, font
-from Isikukood_Modul import *
-from db_funktsioonid import *
-from PIL import Image, ImageTk
+import sqlite3, requests, random, json, string, smtplib, ssl
+from tkinter import messagebox, ttk
+from customtkinter import *   # расширение стандартного модуля Tkinter, которое использует библиотеку CTk
+from CTkSpinbox import *
+from ttkthemes import ThemedTk
+from PIL import Image
 from email.message import EmailMessage
+from Isikukood_Modul import *
+from DB_funktsioonid import *
 
 
-# Выводит данные таблиц из базы данных в терминале (для себя)
 def print_patsiendid():
+    """ Выводит данные таблиц из базы данных в терминале (для себя) """
     # Подключение к базе данных
     conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
 
     # Проверка успешного соединения
-    print("\nПодключение к базе данных успешно")
+    print("\nÜhenduse loomine andmebaasiga õnnestus")
 
     # Получаем все данные из таблицы patsiendid
-    cursor.execute("SELECT * FROM patsiendid")
+    cursor.execute("""SELECT * FROM patsiendid""")
     patsiendid=cursor.fetchall()
 
-    cursor.execute("SELECT * FROM kasutajad")
+    cursor.execute("""SELECT * FROM kasutajad""")
     kasutajad=cursor.fetchall()
 
     if not patsiendid:
-        print("\nТаблица 'patsiendid' пуста")
+        print("\nTabel 'patsiendid' on tühi")
     else:
         print("\nAndmed tabelist patsiendid:")
         for patient in patsiendid:
             print(patient)
 
     if not kasutajad:
-        print("\nТаблица 'kasutajad' пуста")
+        print("\nTabel 'kasutajad' on tühi")
     else:
         print("\n\nAndmed tabelist kasutajad:")
         for kasutaja in kasutajad:
@@ -40,29 +43,54 @@ def print_patsiendid():
     conn.close()
 
 
-# Форма для входа для медсестер и врачей
 def sisselogimine_aken():
+    """ Форма для входа для медсестер и врачей """
     global sisend_kasutajanimi, sisend_parool, aken_login
-    aken_login=tk.Tk()
-    aken_login.title("Autoriseerimine")
-    aken_login.geometry("300x200")
-    print_patsiendid() 
+    
+    pilt_login_src=Image.open("Arvestus/pildid/login_pilt.png")
+    smart_id_src=Image.open("Arvestus/pildid/smart_id.png")
+    pilt_login=CTkImage(light_image=pilt_login_src, size=(300, 480))  # CustomTkinter требует хотя бы один параметр (light_image или dark_image)
+    smart_id=CTkImage(light_image=smart_id_src, size=(120, 45))
 
-    tk.Label(aken_login, text="Kasutajanimi", font="Nunito").pack()
-    sisend_kasutajanimi=tk.Entry(aken_login)
-    sisend_kasutajanimi.pack()
+    aken_login=CTk()
+    aken_login.title("HaiglaAssist - Autoriseerimine")
+    aken_login.geometry("600x480")
+    aken_login.resizable(0,0)  # нельзя поменять размер окна
+    print_patsiendid()
 
-    tk.Label(aken_login, text="Parool", font="Nunito").pack()
-    sisend_parool=tk.Entry(aken_login, show="*")
-    sisend_parool.pack()
+    CTkLabel(aken_login, text="", image=pilt_login).pack(expand=True, side="left")  # expand=True - занимает доступное пространство в контейнере
 
-    tk.Button(aken_login, text="Logi sisse", command=sisselogimine_kasutaja).pack()
+    frame=CTkFrame(aken_login, width=300, height=480, fg_color="white")
+    frame.pack_propagate(0)   # зафиксировать размер Frame (по умолчанию Frame изменяет свои размеры
+    frame.pack(expand=True, side="right")
+
+    CTkLabel(frame, text="Hailga Assist", text_color="#55b3d9", anchor="w", justify="left", font=("Nunito", 24, "bold")).pack(anchor="w", pady=(50, 5), padx=(25, 0))
+    CTkLabel(frame, text="Logige oma kontole sisse", text_color="#7E7E7E", anchor="w", justify="left", font=("Nunito", 14)).pack(anchor="w", padx=(25, 0))
+
+    CTkLabel(frame, text="👤 Kasutajanimi", text_color="#008ba9", anchor="w", justify="left", font=("Nunito", 16), compound="left").pack(anchor="w", pady=(38, 0), padx=(25, 0))
+    sisend_kasutajanimi=CTkEntry(frame, width=225, fg_color="#EEEEEE", border_color="#55b3d9", border_width=1, text_color="black")
+    sisend_kasutajanimi.pack(anchor="w", padx=(25, 0))
+
+    CTkLabel(frame, text="🔒 Parool", text_color="#008ba9", anchor="w", justify="left", font=("Nunito", 16), compound="left").pack(anchor="w", pady=(21, 0), padx=(25, 0))
+    sisend_parool=CTkEntry(frame, width=225, fg_color="#EEEEEE", border_color="#55b3d9", border_width=1, text_color="black", show="*")
+    sisend_parool.pack(anchor="w", padx=(25, 0))
+
+    logi_sisse_nupp=CTkButton(frame, text="Logi sisse", fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white", width=225, command=sisselogimine_kasutaja)
+    logi_sisse_nupp.pack(anchor="w", pady=(30, 0), padx=(25, 0))
+
+    smart_id_nupp=CTkButton(frame, text="", fg_color="white", hover_color="white", image=smart_id, command=message)
+    smart_id_nupp.pack(anchor="w", pady=(30, 0), padx=(65, 0))
 
     aken_login.mainloop()
 
 
-# Функция с авторизацией медсестер и врачей
+def message():
+    """ Сообщение, для частей проекта, которые в разработке """
+    messagebox.showwarning("Vabandage!", "Ajutiselt väljatöötamisel!")
+
+
 def sisselogimine_kasutaja():
+    """ Функция с авторизацией медсестер и врачей """
     global amet, nimi
     kasutajanimi=sisend_kasutajanimi.get()
     parool=sisend_parool.get()
@@ -70,93 +98,112 @@ def sisselogimine_kasutaja():
     conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
 
-    cursor.execute("SELECT nimi, amet FROM kasutajad WHERE kasutajanimi=? AND parool=?", (kasutajanimi, parool))
+    cursor.execute("""
+    SELECT nimi, amet 
+    FROM kasutajad 
+    WHERE kasutajanimi=? AND parool=? 
+    """, (kasutajanimi, parool))
     kasutaja=cursor.fetchone()
     conn.close()
 
     if kasutaja:
         nimi, amet=kasutaja
         messagebox.showinfo("Tere tulemast!", f"Tere tulemast, {nimi}! \n\nSisse logitud kui {amet}")
-
-        aken_login.destroy()  # Закрываем окно входа
+        
+        aken_login.destroy()   # Закрываем старое
         patsiendide_andmed(nimi, amet)  # Открываем главное окно
     else:
         messagebox.showerror("Viga", "Vale kasutajanimi või parool!")
 
 
-# Функция для отображения таблицы пациентов
 def patsiendide_andmed(nimi, amet):
+    """ Функция для отображения таблицы пациентов """
     global tree, search_entry, peamine_aken
 
-    peamine_aken=tk.Tk() 
+    peamine_aken=ThemedTk(theme="adapta") # Использовала модуль с темой
     peamine_aken.title("Haigla Assist")
     peamine_aken.geometry("1200x500")
+    peamine_aken.configure(background="#55b3d9")
+    peamine_aken.resizable(0,0)
+    
+    # Панель кнопок
+    nupude_frame = CTkFrame(peamine_aken, width=200, fg_color="#55b3d9")
+    nupude_frame.pack_propagate(0)
+    nupude_frame.pack(side="right", fill="y")
 
-    tk.Label(peamine_aken, text=f"Tere, {nimi}!", font=("Nunito", 16)).pack(pady=20)
+    logo_src=Image.open("Arvestus/pildid/hospital.png")
+    logo_pilt=CTkImage(light_image=logo_src, size=(130, 130))
+    CTkLabel(nupude_frame, text="", image=logo_pilt).pack(pady=(30, 40), padx=10)
 
-    # Панель с поиском
-    search_frame=tk.Frame(peamine_aken)
-    search_frame.pack(pady=10)
+    lisa_nupp=CTkButton(nupude_frame, text="➕ Lisa andmeid", command=lisa_patsient, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
+    lisa_nupp.pack(padx=10, pady=10, ipady=5)
+    
+    osakond_nupp=CTkButton(nupude_frame, text="📋 Kuva osakond", command=osakond_aken, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
+    osakond_nupp.pack(pady=10, ipady=5)
+    
+    if amet == "arst":
+        filter_nupp=CTkButton(nupude_frame, text="👥 Minu patsiendid", command=lambda: load_data_from_db(tree, arst_nimi=nimi), fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
+        filter_nupp.pack(pady=(10,0), ipady=5)
+    
+    logi_valja_nupp=CTkButton(nupude_frame, text="➜ Logi välja", command=lambda: (peamine_aken.destroy(), sisselogimine_aken()), fg_color="white", hover_color="#01608b", font=("Nunito", 16, "bold"), text_color="#55b3d9")
+    logi_valja_nupp.pack(side="bottom", pady=50, ipady=5)
+    
+    # Основной фрейм
+    frame=CTkFrame(peamine_aken, fg_color="white")
+    frame.pack(pady=20, side="left", expand=True, fill="both")
 
-    search_label=tk.Label(search_frame, text="Otsi patsient isikukoodi järgi:")
-    search_label.pack(side=tk.LEFT)
+    CTkLabel(frame, text=f"Tere, {nimi}!", font=("Nunito", 24, "bold"), fg_color="white", text_color="#55b3d9").pack(pady=20)
+    
+    # Поисковая панель
+    search_frame=CTkFrame(frame, fg_color="#EEEEEE")
+    search_frame.pack(side="top", fill="x", padx=10, pady=10, ipady=15)
+    
+    search_label=CTkLabel(search_frame, text="Otsi patsient isikukoodi järgi:", font=("Nunito", 14))
+    search_label.pack(side=tk.LEFT, padx=5)
 
-    search_entry=tk.Entry(search_frame)
+    search_entry=CTkEntry(search_frame, border_color="#55b3d9", border_width=2,)
     search_entry.pack(side=tk.LEFT, padx=10)
 
-    search_button=tk.Button(search_frame, text="Otsi", command=on_search)
-    search_button.pack(side=tk.LEFT)
+    search_button=CTkButton(search_frame, text="Otsi", command=on_search, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
+    search_button.pack(side=tk.LEFT, padx=10)
 
-    frame=tk.Frame(peamine_aken)
-    frame.pack(pady=20, fill=tk.BOTH, expand=True)
-
-    # Панель с кнопками с правой стороны таблицы
-    nupude_frame=tk.Frame(frame)
-    nupude_frame.pack(side=tk.RIGHT, anchor="e", padx=10)
-
-    lisa_nupp=tk.Button(nupude_frame, text="Lisa andmeid", command=lisa_patsient)
-    lisa_nupp.pack(padx=10, pady=10)
-
-    osakond_nupp=tk.Button(nupude_frame, text="Kuva oskond", command=osakond_aken)
-    osakond_nupp.pack(pady=10)
-
-    if amet=="arst":  # Если пользователь - врач, добавляем кнопку фильтрации
-        filter_nupp=tk.Button(nupude_frame, text="Minu patsiendid", command=lambda: load_data_from_db(tree, arst_nimi=nimi))
-        filter_nupp.pack(pady=10)
-
-    logi_valja_nupp=tk.Button(nupude_frame, text="Logi välja", command=lambda: (peamine_aken.destroy(), sisselogimine_aken()))
-    logi_valja_nupp.pack(side="bottom", anchor="s", pady=80)
-
-    # Таблица с прокруткой
-    scrollbar=tk.Scrollbar(frame)
+    refresh_button=CTkButton(search_frame, text="Värskenda tabel", command=refresh_table, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
+    refresh_button.pack(side=tk.LEFT, padx=10)
+    
+    # Таблица
+    table_frame=CTkFrame(frame)
+    table_frame.pack(fill="both", expand=True)
+    
+    scrollbar=CTkScrollbar(table_frame, fg_color="white")
     scrollbar.pack(side=tk.RIGHT, fill=tk.Y)
-
-    tree=ttk.Treeview(frame, yscrollcommand=scrollbar.set, columns=("Eesnimi", "Perekonnanimi", "Isikukood", "Registreerimis aeg", "Palati nr", "Arst", "Diagnoos", "Staatus"), show="headings")
+    
+    tree=ttk.Treeview(table_frame, yscrollcommand=scrollbar.set, columns=("Eesnimi", "Perekonnanimi", "Isikukood", "Registreerimise aeg", "Palati nr", "Arst", "Diagnoos", "Staatus"), show="headings")
     tree.bind("<Double-1>", lambda event: valitud_patsient(tree))
-    tree.pack(fill=tk.BOTH, expand=True)
+    tree.pack(side="top", fill="both", expand=True)
 
     # Связываем прокрутку с таблицей
-    scrollbar.config(command=tree.yview)
+    scrollbar.configure(command=tree.yview)
 
     # Заголовки столбцов
     tree.heading("Eesnimi", text="Eesnimi")
     tree.heading("Perekonnanimi", text="Perekonnanimi")
     tree.heading("Isikukood", text="Isikukood")
-    tree.heading("Registreerimis aeg", text="Registreerimis aeg")
+    tree.heading("Registreerimise aeg", text="Registreerimise aeg")
     tree.heading("Palati nr", text="Palati nr")
     tree.heading("Arst", text="Arst")
     tree.heading("Diagnoos", text="Diagnoos")
     tree.heading("Staatus", text="Staatus")
 
+
     # Ширина столбцов
     tree.column("Eesnimi", width=100)
     tree.column("Perekonnanimi", width=150)
-    tree.column("Isikukood", width=80)
-    tree.column("Registreerimis aeg", width=110)
+    tree.column("Isikukood", width=70)
+    tree.column("Registreerimise aeg", width=110)
     tree.column("Palati nr", width=50)
     tree.column("Arst", width=100)
     tree.column("Diagnoos", width=150)
-    tree.column("Staatus", width=100)
+    tree.column("Staatus", width=130)
 
     # Загружаем данные из базы данных
     load_data_from_db(tree)
@@ -164,8 +211,9 @@ def patsiendide_andmed(nimi, amet):
     peamine_aken.mainloop()
 
 
-# --- Подробная информация о пациенте (при двойном клике на пациента) -------------------------------
+# --- Выбранный пациент из таблицы -------------------------------
 def valitud_patsient(tree):
+    """ Подробная информация о пациенте (при двойном клике на пациента) """
     global patsiendi_info, patient_data
 
     valik=tree.selection()
@@ -182,9 +230,9 @@ def valitud_patsient(tree):
 
     cursor.execute("""
         SELECT eesnimi, perekonnanimi, email, isikukood, kaal, pikkus, 
-        ylemineRohk, madalamRohk, temperatuur, kaebus, dieet, palati_nr, arst_ID, staatus 
-        FROM patsiendid WHERE isikukood = ?
-    """, (isikukood,))
+        ylemine_rohk, madalam_rohk, temperatuur, kaebus, dieet, palati_nr, arst_ID, staatus 
+        FROM patsiendid WHERE isikukood = ? 
+        """, (isikukood,))
     patient_data=cursor.fetchone()
     
     conn.close()
@@ -194,26 +242,41 @@ def valitud_patsient(tree):
         return
 
     # Открываем новое окно с информацией о пациенте
-    patsiendi_info=tk.Toplevel()
+    patsiendi_info=CTkToplevel(peamine_aken)
     patsiendi_info.title("Patsiendi andmed")
-    patsiendi_info.geometry("400x600")
+    patsiendi_info.geometry("400x630")
+    patsiendi_info.resizable(0,0)
+
+    # Cоздаём вкладочный интерфейс (notebook)
+    notebook=ttk.Notebook(patsiendi_info, style="TNotebook")
+    notebook.pack(fill="both", expand=True)
+    style=ttk.Style()
+    style.configure("TNotebook", background="#EEEEEE") 
+
+    # Вкладка - Patsiendi andmed
+    info_frame=ttk.Frame(notebook)
+    notebook.add(info_frame, text="Andmed")
 
     labels=["Eesnimi", "Perekonnanimi", "E-mail", "Isikukood", "Sünniaeg", "Sugu", "Kaal (kg)", 
               "Pikkus (cm)", "Ülemine rõhk", "Alumine rõhk", "Temperatuur", 
               "Kaebus", "Dieet", "Palati nr", "Arst", "Staatus"]
     
     # Извлекаем имя врача по ID
-    arst_id=patient_data[11]
+    arst_id=patient_data[12]
     conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
-    cursor.execute("SELECT nimi FROM kasutajad WHERE ID = ?", (arst_id,))
+    cursor.execute("""
+    SELECT nimi 
+    FROM kasutajad 
+    WHERE ID = ? 
+    """, (arst_id,))
     arst_nimi=cursor.fetchone()
     conn.close()
 
     if arst_nimi:
         arst_nimi=arst_nimi[0]
     else:
-        arst_nimi = "Määramata"
+        arst_nimi="Määramata"
 
     # Вычисляем дату рождения и возраст с помощью импортированного модуля проверки исикукода
     synniaeg=leia_synniaeg(isikukood)
@@ -225,40 +288,76 @@ def valitud_patsient(tree):
     patient_data.insert(5, sugu)  # Возраст
 
     # Вывод данных в новом окне
-    for i, label in enumerate(labels):
-        tk.Label(patsiendi_info, text=label + ":", font=("Arial", 10, "bold")).grid(row=i, column=0, sticky="w", padx=10, pady=5)
-        tk.Label(patsiendi_info, text=str(patient_data[i]), font=("Arial", 10)).grid(row=i, column=1, sticky="w", padx=10, pady=5)
+    for i, label in enumerate(labels):    # enumerate - создаёт пары (индекс, значение)
+        ttk.Label(info_frame, text=label + ":", font=("Nunito", 11, "bold"), foreground="#008ba9", background="#fafbfc").grid(row=i, column=0, sticky="w", padx=10, pady=5)
+        ttk.Label(info_frame, text=str(patient_data[i]), font=("Nunito", 11), background="#fafbfc").grid(row=i, column=1, sticky="w", padx=10, pady=5)
 
-
-    # Если роль врача и статус "В ожидании осмотра врача" --> показываем кнопку для добавления 
-    epikriis_nupp=tk.Button(patsiendi_info, text="Lisa epikriis", command=lambda: lisa_epikriis(isikukood))
+    # Если роль врача и статус "В ожидании осмотра врача" --> показываем кнопку для добавления эпикриза
+    epikriis_nupp=CTkButton(info_frame, text="📌 Lisa epikriis", command=lambda: lisa_epikriis(isikukood), fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
     if amet=="arst":
-        epikriis_nupp.grid(row=len(labels)+ 1, column=0, columnspan=1, padx=5, pady=10)
+        epikriis_nupp.grid(row=len(labels)+ 1, column=0, rowspan=1, padx=10, pady=(30,10))
 
-    valja_kirjutada_nupp=tk.Button(patsiendi_info, text="Välja kirjutada", command=on_update)
+    # Если роль врача и статус "Осмотрен врачем" --> показываем кнопку для возможности выписки пациента
+    valja_kirjutada_nupp=CTkButton(info_frame, text="📧 Välja kirjutada", command=on_update, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
     staatus=patient_data[15]
-    if amet=="arst" and  staatus=="Ravitud arstilt":
-        valja_kirjutada_nupp.grid(row=len(labels)+ 1, column=1, columnspan=1, padx=5, pady=10)
+    if amet=="arst" and  staatus=="Arsti poolt läbivaadatud":
+        valja_kirjutada_nupp.grid(row=len(labels)+ 1, column=1, rowspan=1, padx=10, pady=(30,10))
 
 
-# --- Врач составляет эпикриз ---------------------------------------
+    # Вкладка - Päevik
+    diary_frame=ttk.Frame(notebook)
+    notebook.add(diary_frame, text="Päevik")
+
+    # Создаем одно текстовое поле для всего дневника
+    # Контейнер для комментариев
+    paevik=tk.Label(diary_frame, width=60, height=20)
+    paevik.pack(padx=10, pady=10)
+    
+    conn=sqlite3.connect("Arvestus/AppData/haigla.db")
+    cursor=conn.cursor()
+    cursor.execute("""
+    SELECT p.kommentaar, k.nimi AS arst_nimi 
+    FROM patsiendid p 
+    LEFT JOIN kasutajad k ON p.arst_ID=k.id 
+    WHERE p.isikukood = ? AND k.nimi = ? 
+    """, (isikukood, arst_nimi))
+    diary_entries=cursor.fetchall()
+    conn.close()
+
+    for entry in diary_entries:
+            if entry[0]:
+                lisa_text=f"{entry[1]}:\n{entry[0]}\n"
+                diary_text=CTkTextbox(paevik, width=600, height=500, font=("Nunito", 14), text_color="#333333", wrap="word")
+                diary_text.pack(padx=10, pady=10, fill='both', expand=True)
+                diary_text.insert("1.0", lisa_text)
+                diary_text.configure(state="disabled")
+    
+    kommentaar_nupp=CTkButton(diary_frame, text="Lisa kommentaar", command=message, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
+    kommentaar_nupp.pack(pady=10)
+
+
 def lisa_epikriis(isikukood):
+    """ Добавление эпикриза врачом """
+    global kommentaar
+
     if patsiendi_info:   
         patsiendi_info.destroy() 
-    epikriz_aken=tk.Tk()
+    epikriz_aken=CTkToplevel()
     epikriz_aken.title("Epikriis")
-    epikriz_aken.geometry("400x300")
+    epikriz_aken.geometry("400x450")
+    epikriz_aken.resizable(0,0)
 
-    tk.Label(epikriz_aken, text="Diagnoos:").pack(pady=10)
-    diagnoos_entry=tk.Entry(epikriz_aken, width=40)
+    CTkLabel(epikriz_aken, text="Diagnoos:", font=("Nunito", 16, "bold"), text_color="#008ba9").pack(pady=10)
+    diagnoos_entry=CTkEntry(epikriz_aken, width=300, border_color="#55b3d9")
     diagnoos_entry.pack(pady=10)
 
-    tk.Label(epikriz_aken, text="Kommentaar:").pack(pady=10)
-    kommentaar_text=tk.Text(epikriz_aken, height=6, width=40)
+    CTkLabel(epikriz_aken, text="Kommentaar:", font=("Nunito", 16, "bold"), text_color="#008ba9").pack(pady=10)
+    kommentaar_text=CTkTextbox(epikriz_aken, height=200, width=300)
     kommentaar_text.pack(pady=10)
 
-    # Кнопка для сохранения эпикриза и изменения статуса
+
     def salvesta_epikriis():
+        """ Кнопка для сохранения эпикриза и изменения статуса """
         diagnoos=diagnoos_entry.get()
         kommentaar = kommentaar_text.get("1.0", tk.END).strip()
 
@@ -271,21 +370,22 @@ def lisa_epikriis(isikukood):
         cursor=conn.cursor()
         cursor.execute("""
             UPDATE patsiendid 
-            SET diagnoos = ?, staatus = ? 
-            WHERE isikukood = ?
-        """, (diagnoos, "Ravitud arstilt", isikukood))
+            SET diagnoos = ?, kommentaar = ?, staatus = ? 
+            WHERE isikukood = ? 
+            """, (diagnoos, kommentaar, "Arsti poolt läbivaadatud", isikukood))
         conn.commit()
         conn.close()
 
         messagebox.showinfo("Edu", "Epikriis on salvestatud ja staatus muudetud!")
         epikriz_aken.destroy()
 
-    save_button=tk.Button(epikriz_aken, text="Salvesta epikriis", command=salvesta_epikriis)
+    save_button=CTkButton(epikriz_aken, text="Salvesta epikriis", command=salvesta_epikriis, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
     save_button.pack(pady=20)
 
 
 # --- Выписка пациента ---
 def on_update():
+    """ Проверяет, выбрана ли строка в Treeview """
     selected_item=tree.selection()  # выбранный ряд
     if selected_item:
         isikukood=selected_item[0]  # id (ID)
@@ -294,29 +394,34 @@ def on_update():
         messagebox.showwarning("Valik puudub", "Palun vali kõigepealt rida!")
 
 def patsiendi_valja_kirjutamine(isikukood):
-    global advice_text, paevad_haiglas
+    """ Выписка пациента из больницы """
+    global koduravi_text, paevad_haiglas
+
+    if patsiendi_info:   
+        patsiendi_info.destroy() 
     
-    valja_kirjutamine_aken=tk.Toplevel()
+    valja_kirjutamine_aken=ThemedTk(theme="arc")
     valja_kirjutamine_aken.title("Koduravi ja arve patsiendile")
+    valja_kirjutamine_aken.geometry("400x450")
+    valja_kirjutamine_aken.resizable(0,0)
 
+    CTkLabel(valja_kirjutamine_aken, text="Sisestage patsiendi nõuanded koduse raviks:", font=("Nunito", 16, "bold"), text_color="#008ba9").pack(padx=10, pady=10)
+    koduravi_text=CTkTextbox(valja_kirjutamine_aken, height=230, width=300)
+    koduravi_text.pack(padx=10, pady=10)
 
-    tk.Label(valja_kirjutamine_aken, text="Sisestage patsiendi nõuanded koduse raviks:").pack(padx=10, pady=10)
-    advice_text=tk.Text(valja_kirjutamine_aken, height=10, width=40)
-    advice_text.pack(padx=10, pady=10)
-
-    tk.Label(valja_kirjutamine_aken, text="Päevade arv haiglas:").pack(padx=10, pady=5)
-    paevad_haiglas=tk.Spinbox(valja_kirjutamine_aken, from_=0, to=100, increment=1, width=5)
+    CTkLabel(valja_kirjutamine_aken, text="Päevade arv haiglas:", font=("Nunito", 16, "bold"), text_color="#008ba9").pack(padx=10, pady=5)
+    paevad_haiglas=ttk.Spinbox(valja_kirjutamine_aken, from_=0, to=100, increment=1, width=5)
     paevad_haiglas.pack(padx=10, pady=10)
 
     # Кнопка для отправки советов
-    tk.Button(valja_kirjutamine_aken, text="Saada kiri", command=lambda: saada_kiri(isikukood)).pack(pady=10)
+    CTkButton(valja_kirjutamine_aken, text="Saada kiri", command=lambda: saada_kiri(isikukood), fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white").pack(pady=10)
 
 
-# --- Оплата за кол-во дней в больнице (ссылка прикрепляется к тексту письма)
 def generate_nonce(length=16):
     return ''.join(random.choices(string.ascii_letters + string.digits, k=length))
 
 def create_payment():
+    """ Оплата за кол-во дней в больнице (ссылка прикрепляется к тексту письма) """
     global payment_reference, paevad_hailglas
     # EveryPay данные
     API_URL = "https://igw-demo.every-pay.com/api/v4/payments/oneoff"
@@ -354,15 +459,15 @@ def create_payment():
         return None
 
 
-# Отправка письма (с советами и назначением лечения от врача + ссылка на оплату количества проведенных дней в больнице)
 def saada_kiri(isikukood):
+    """ Отправка письма (с советами и назначением лечения от врача + ссылка на оплату количества проведенных дней в больнице) """
     selected_item = tree.selection() 
     if selected_item:
         email = patient_data[2]
         isikukood = patient_data[3]
 
         payment_link = create_payment()
-        kiri=advice_text.get("1.0","end")+f"\nДля оплаты услуг перейдите по ссылке: {payment_link}"  # домашнее лечение + ссылка на оплату
+        kiri=koduravi_text.get("1.0","end")+f"\n\nVoodipäevatasu tasumiseks haiglas järgige linki: {payment_link}"  # домашнее лечение + ссылка на оплату
 
         smtp_server="smtp.gmail.com"
         port=587
@@ -390,13 +495,12 @@ def saada_kiri(isikukood):
         except Exception as e:
             messagebox.showerror("Tekkis viga!",e)
         finally:
-            server.quit()
+            server.destroy()
 
 
 #--- Добавление нового пациента и сохранение в базу данных и таблицу --------------------------------------------------------------
-
-# Функция проверяет, правильны ли введенные данные
 def validate_data():
+    """ Функция проверяет, правильны ли введенные данные """
 
     eesnimi=entries["Eesnimi"].get()
     perekonnanimi=entries["Perekonnanimi"].get()
@@ -404,8 +508,6 @@ def validate_data():
     isikukood=entries["Isikukood"].get()
     kaal=entries["Kaal (kg)"].get()
     pikkus=entries["Pikkus (cm)"].get()
-    rohk_yl=entries["Rõhk_ül"].get()
-    rohk_al=entries["Rõhk_al"].get()
     temperatuur=entries["Temperatuur"].get()
     kaebus=entries["Kaebus"].get("1.0", tk.END).strip()
 
@@ -417,7 +519,7 @@ def validate_data():
     if not eesnimi or not perekonnanimi:
         tk.messagebox.showerror("Viga", "Ees- ja Perekonnanimi on kohustuslik!")
         return False
-    if not kaal.isdigit() or not pikkus.isdigit() or not temperatuur.isdigit() or not rohk_yl.isdigit() or not rohk_al.isdigit() :
+    if not kaal.isdigit() or not pikkus.isdigit() or not temperatuur.isdigit():
         tk.messagebox.showerror("Viga", "Sisend peab olema arv!")
         return False
     if not kaebus:
@@ -427,58 +529,82 @@ def validate_data():
         tk.messagebox.showerror("Viga", "E-mail peab olema korrektne!")
         return False
 
+    # Проверка, что хотя бы одна диета выбрана
+    if not (dieet_baas or dieet_diabeet or dieet_laktoos):
+        tk.messagebox.showerror("Viga", "Valige vähemalt üks dieet!")
+        return False
+
     # Проверка искикода
     teade=kontrolli_ikood(isikukood)
     if teade is not True:
         tk.messagebox.showerror("Viga", teade)
         return False
 
+    conn=sqlite3.connect("Arvestus/AppData/haigla.db") 
+    cursor=conn.cursor()
+    cursor.execute("SELECT COUNT(*) FROM patsiendid WHERE isikukood = ?", (isikukood,))
+    tulemus=cursor.fetchone()
+
+    # Если исикукод уже зарегистрирован, выводим ошибку
+    if tulemus[0]>0:
+        tk.messagebox.showerror("Viga", "Isikukood on juba registreeritud!")
+        conn.close()
+        return False
+
+    conn.close()
     return True
 
 
-# Очищает все поля ввода
 def clear_entries():
-    for entry in entries.items():
-        if isinstance(entry, tk.Entry) or isinstance(entry, ttk.Combobox):
+    """ Очищает все поля ввода """
+    for key, entry in entries.items():
+        if isinstance(entry, CTkEntry):
             entry.delete(0, tk.END)
-        elif isinstance(entry, tk.Text):
+        elif isinstance(entry, CTkComboBox):
+            entry.set("")  # Очистка комбобокса
+        elif isinstance(entry, CTkTextbox):
             entry.delete("1.0", tk.END)
-        elif isinstance(entry, tk.BooleanVar):  # Сброс чекбоксов
-            entry.set(False)
+        elif isinstance(entry, CTkSpinbox):  # Сброс чекбоксов
+            entry.set(0)   # Сброс значения спинбокса на 0
+        elif isinstance(entry, IntVar):  # Сброс чекбоксов
+            entry.set(0)
 
-
-# Добавление пациента
+             
 def lisa_patsient():
+    """ Добавление пациента """
     global entries
 
     lisa_patsient_aken=tk.Toplevel()
     lisa_patsient_aken.title("Patsiendi andmete sisetamine")
-    lisa_patsient_aken.geometry("460x550")
+    lisa_patsient_aken.geometry("480x600")
+    lisa_patsient_aken.configure(bg="#f5f6f7") 
+    lisa_patsient_aken.resizable(0,0) 
 
     # Поля для ввода данных пациента
     labels=["Eesnimi", "Perekonnanimi", "E-mail", "Isikukood", "Kaal (kg)", "Pikkus (cm)", "Vererõhk", "Temperatuur", "Kaebus", "Dieet", "Arst", "Palati number"]
     entries={}
 
     for i, label in enumerate(labels):
-        tk.Label(lisa_patsient_aken, text=label).grid(row=i, column=0, padx=10, pady=5, sticky="w")
+        ttk.Label(lisa_patsient_aken, text=label, font=("Nunito", 11, "bold"), background="#f5f6f7").grid(row=i, column=0, padx=10, pady=5, sticky="w")
         if label=="Dieet":
             # Создаем Frame для чекбоксов
             dieet_frame=tk.Frame(lisa_patsient_aken)
             dieet_frame.grid(row=i, column=1, padx=10, pady=5, sticky="w")
+            dieet_frame.configure(bg="#f5f6f7")
 
-            # Создаем переменные для чекбоксов (BooleanVar - напрямую управляет состоянием чекбокса как True (выбран) или False (не выбран)) 
-            dieet_baas_var=tk.BooleanVar()  
-            dieet_diabeet_var=tk.BooleanVar()
-            dieet_laktoos_var=tk.BooleanVar()
+            # Создаём переменные для чекбоксов
+            dieet_baas_var=IntVar()   # IntVar - специальная переменная в Tkinter, которая связывает чекбокс с его состоянием (выбран/не выбран)
+            dieet_diabeet_var=IntVar()
+            dieet_laktoos_var=IntVar()
 
-            # Создаем чекбоксы
-            dieet_baas=tk.Checkbutton(dieet_frame, text="Baasdieet", variable=dieet_baas_var)
+            # Создаём кастомные чекбоксы
+            dieet_baas=CTkCheckBox(dieet_frame, text="Baasdieet", font=("Nunito", 13), variable=dieet_baas_var, fg_color="#55b3d9", hover_color="#008ba9")
             dieet_baas.grid(row=0, column=0, padx=5, sticky="w")
-        
-            dieet_diabeet=tk.Checkbutton(dieet_frame, text="Diabeetiline", variable=dieet_diabeet_var)
+
+            dieet_diabeet=CTkCheckBox(dieet_frame, text="Diabeetiline", font=("Nunito", 13), variable=dieet_diabeet_var, fg_color="#55b3d9", hover_color="#008ba9")
             dieet_diabeet.grid(row=0, column=1, padx=5, sticky="w")
-        
-            dieet_laktoos=tk.Checkbutton(dieet_frame, text="Laktoosivaba", variable=dieet_laktoos_var)
+
+            dieet_laktoos=CTkCheckBox(dieet_frame, text="Laktoosivaba", font=("Nunito", 13), variable=dieet_laktoos_var, fg_color="#55b3d9", hover_color="#008ba9")
             dieet_laktoos.grid(row=0, column=2, padx=5, sticky="w")
 
             # Сохраняем чекбоксы в entries
@@ -487,7 +613,7 @@ def lisa_patsient():
             entries["Dieet_laktoos"]=dieet_laktoos_var
 
         elif label=="Kaebus":
-            entry=tk.Text(lisa_patsient_aken, height=6, width=40)
+            entry=CTkTextbox(lisa_patsient_aken, height=100, width=250, fg_color="white")
             entry.grid(row=i, column=1, padx=10, pady=5, sticky="w")
 
         elif label=="Arst":
@@ -499,73 +625,76 @@ def lisa_patsient():
 
             # Составляем список имен врачей для отображения в Combobox
             arstide_nimed=[arst[1] for arst in arstid] 
-            entry=ttk.Combobox(lisa_patsient_aken, values=arstide_nimed)
+            entry=CTkComboBox(lisa_patsient_aken, values=arstide_nimed)
             entry.grid(row=i, column=1, padx=10, pady=5, sticky="w")
             cursor.close()  
             conn.close()
 
         elif label=="Vererõhk":
            # Создаем Frame для давления
-            rohk_frame=tk.Frame(lisa_patsient_aken)
+            rohk_frame=CTkFrame(lisa_patsient_aken)
             rohk_frame.grid(row=i, column=1, columnspan=2, padx=5, pady=5, sticky="w")
-
+            rohk_frame.configure(fg_color="#f5f6f7")
+            
             # Верхнее (систолическое) давление
-            tk.Label(rohk_frame, text="Ülemine").grid(row=0, column=0, padx=(0,5))
-            entries["Rõhk_ül"]=tk.Spinbox(rohk_frame, from_=90, to=200, increment=10, width=5)
-            entries["Rõhk_ül"].grid(row=0, column=1, padx=5)
+            tk.Label(rohk_frame, text="Ülemine", bg="#f5f6f7", font=("Nunito", 10)).grid(row=0, column=0, padx=(0,5))
+            entries["Rõhk_ül"]=CTkSpinbox(rohk_frame, start_value=120, min_value = 90, max_value = 200, scroll_value=1, step_value=10, border_color="#f5f6f7", fg_color="#EEEEEE", font=("Nunito", 16, "bold"))
+            entries["Rõhk_ül"].grid(row=0, column=1)
 
             # Нижнее (диастолическое) давление
-            tk.Label(rohk_frame, text="Alumine").grid(row=0, column=2, padx=(10,5))
-            entries["Rõhk_al"]=tk.Spinbox(rohk_frame, from_=50, to=130, increment=10, width=5)
-            entries["Rõhk_al"].grid(row=0, column=3, padx=5)
+            tk.Label(rohk_frame, text="Alumine", bg="#f5f6f7", font=("Nunito", 10)).grid(row=0, column=2, padx=(10,5))
+            entries["Rõhk_al"]=CTkSpinbox(rohk_frame, start_value=80, min_value=50, max_value=130, scroll_value=1, step_value=10, border_color="#f5f6f7", font=("Nunito", 16, "bold"), fg_color="#EEEEEE")
+            entries["Rõhk_al"].grid(row=0, column=3)
             continue
 
         elif label=="Palati number":
-            entry=ttk.Combobox(lisa_patsient_aken, values=["1", "2", "3", "4", "5", "6"])
+            entry=CTkComboBox(lisa_patsient_aken, values=["1", "2", "3", "4", "5", "6"])
             entry.grid(row=i, column=1, padx=10, pady=5, sticky="w")
 
         else:
-            entry=tk.Entry(lisa_patsient_aken, width=40)
+            entry=CTkEntry(lisa_patsient_aken, width=250, border_color="#55b3d9")
             entry.grid(row=i, column=1, padx=10, pady=5, sticky="w")
         entries[label]=entry
 
          # Дата регистрации (сегодняшняя дата)
         today_date=datetime.today().strftime("%Y-%m-%d")
-        entries["RegistreerimiseAeg"] = today_date  # Устанавливаем сегодняшнюю дату
+        entries["registreerimise_aeg"]=today_date  # Устанавливаем сегодняшнюю дату
 
     # Кнопки сохранения и очистки
-    button_frame=tk.Frame(lisa_patsient_aken)
-    button_frame.grid(row=len(labels) + 1, column=0, columnspan=2, pady=20)
+    nuppude_frame=tk.Frame(lisa_patsient_aken)
+    nuppude_frame.grid(row=len(labels) + 1, column=0, columnspan=2, pady=20)
+    nuppude_frame.configure(bg="#f5f6f7")
 
-    lisa_nupp=tk.Button(button_frame, text="Registreeri patsient", command=insert_data)
-    lisa_nupp.pack(side="left", padx=10)
+    lisa_nupp=CTkButton(nuppude_frame, text="Registreeri patsient", command=insert_data, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
+    lisa_nupp.pack(side="left", padx=10, pady=(0, 10))
 
-    kustuta_nupp=tk.Button(button_frame, text="Puhasta väljad", command=clear_entries)
-    kustuta_nupp.pack(side="left", padx=10)
+    kustuta_nupp=CTkButton(nuppude_frame, text="Puhasta väljad", command=clear_entries, fg_color="#55b3d9", hover_color="#008ba9", font=("Nunito", 16, "bold"), text_color="white")
+    kustuta_nupp.pack(side="left", padx=10, pady=(0, 10))
 
     lisa_patsient_aken.mainloop()
 
-# Для определения выбранной диеты
-def valitud_dieet():
+
+def vali_dieet():
+    """ Определение выбранной диеты """
     dieet_baas=entries["Dieet_baas"].get()
     dieet_diabeet=entries["Dieet_diabeet"].get()
     dieet_laktoos=entries["Dieet_laktoos"].get()
 
-    selected_dieet=[]
+    valitud_dieet=[]
 
     if dieet_baas:
-        selected_dieet.append("Baasdieet")
+        valitud_dieet.append("Baasdieet")
     if dieet_diabeet:
-        selected_dieet.append("Diabeetiline")
+        valitud_dieet.append("Diabeetiline")
     if dieet_laktoos:
-        selected_dieet.append("Laktoosivaba")
+        valitud_dieet.append("Laktoosivaba")
 
-    return ", ".join(selected_dieet)
+    return ", ".join(valitud_dieet)
 
 
 
 def saada_arsti_id():
-    # Получаем имя врача, выбранного в комбобоксе
+    """ Получаем имя врача, выбранного в комбобоксе """
     valitud_arst=entries["Arst"].get()
     connection=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=connection.cursor()
@@ -581,14 +710,14 @@ def saada_arsti_id():
         return None
 
 
-# Проверяет данные и добавляет их в базу данных
 def insert_data():
+    """ Проверяет данные и добавляет их в базу данных """
     if validate_data():
         connection=sqlite3.connect("Arvestus/AppData/haigla.db")
         cursor=connection.cursor()
 
         cursor.execute("""
-            INSERT INTO patsiendid (eesnimi, perekonnanimi, email, isikukood, kaal, pikkus, ylemineRohk, madalamRohk, temperatuur, kaebus, dieet, arst_ID, palati_nr, diagnoos, staatus)
+            INSERT INTO patsiendid (eesnimi, perekonnanimi, email, isikukood, kaal, pikkus, ylemine_rohk, madalam_rohk, temperatuur, kaebus, dieet, palati_nr, arst_ID, diagnoos, staatus)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         """, (
             entries["Eesnimi"].get(),
@@ -601,11 +730,11 @@ def insert_data():
             entries["Rõhk_al"].get(),
             entries["Temperatuur"].get(),
             entries["Kaebus"].get("1.0", tk.END).strip(),
-            valitud_dieet(),
+            vali_dieet(),
             entries["Palati number"].get(),
             saada_arsti_id(),
             "Tundmatu",
-            "Ootel arstilt"))
+            "Ootab arsti läbivaatust"))
 
         connection.commit()
         connection.close()
@@ -613,29 +742,40 @@ def insert_data():
         messagebox.showinfo("Edu", "Patsient on registreeritud süsteemi!")
 
 
-# --- Поиск -------------------------------------------------------------------
+# --- Поиск и обновить -------------------------------------------------------------------
+def refresh_table():
+    load_data_from_db(tree)
+
 def on_search():
     search_query=search_entry.get()
     load_data_from_db(tree, search_query)
 
-#Функция, которая загружает данные из базы данных SQLite и вставляет их в таблицу
 def load_data_from_db(tree, search_query="", arst_nimi=None):
-    # Puhasta Treeview tabel enne uute andmete lisamist
+    """ Функция, которая загружает данные из базы данных SQLite и вставляет их в таблицу """
+    # Очистить таблицу Treeview перед добавлением новых данных
     for item in tree.get_children():
         tree.delete(item)
-    # Loo ühendus SQLite andmebaasiga
+
     conn=sqlite3.connect("Arvestus/AppData/haigla.db")
     cursor=conn.cursor()
-    # Tee päring andmebaasist andmete toomiseks
+
     if arst_nimi:  # Фильтрация пациентов по имени врача
-        cursor.execute("SELECT p.eesnimi, p.perekonnanimi, p.isikukood, p.registreerimiseAeg, p.palati_nr, k.nimi AS arst_nimi, p.diagnoos, p.staatus FROM patsiendid p LEFT JOIN kasutajad k ON p.arst_ID = k.id WHERE k.nimi = ?",(arst_nimi,))
+        cursor.execute(""" 
+        SELECT p.eesnimi, p.perekonnanimi, p.isikukood, p.registreerimise_aeg, p.palati_nr, k.nimi AS arst_nimi, p.diagnoos, p.staatus 
+        FROM patsiendid p 
+        LEFT JOIN kasutajad k ON p.arst_ID = k.id 
+        WHERE k.nimi = ? """,(arst_nimi,))
     elif search_query:
-        cursor.execute(
-            "SELECT p.eesnimi, p.perekonnanimi, p.isikukood, p.registreerimiseAeg, p.palati_nr, k.nimi AS arst_nimi, p.diagnoos, p.staatus FROM patsiendid p LEFT JOIN kasutajad k ON p.arst_ID=k.id WHERE p.isikukood LIKE ?", 
-            ('%' + search_query + '%',))
+        cursor.execute(""" 
+        SELECT p.eesnimi, p.perekonnanimi, p.isikukood, p.registreerimise_aeg, p.palati_nr, k.nimi AS arst_nimi, p.diagnoos, p.staatus 
+        FROM patsiendid p 
+        INNER JOIN kasutajad k ON p.arst_ID=k.id 
+        WHERE p.isikukood LIKE ? """, ('%' + search_query + '%',))
     else:
-        cursor.execute(
-            "SELECT p.eesnimi, p.perekonnanimi, p.isikukood, p.registreerimiseAeg, p.palati_nr, k.nimi AS arst_nimi, p.diagnoos, p.staatus FROM patsiendid p LEFT JOIN kasutajad k ON p.arst_ID=k.id")
+        cursor.execute(""" 
+        SELECT p.eesnimi, p.perekonnanimi, p.isikukood, p.registreerimise_aeg, p.palati_nr, k.nimi AS arst_nimi, p.diagnoos, p.staatus 
+        FROM patsiendid p 
+        INNER JOIN kasutajad k ON p.arst_ID=k.id """)
 
     rows=cursor.fetchall()
 
@@ -647,23 +787,24 @@ def load_data_from_db(tree, search_query="", arst_nimi=None):
 
 
 #----------------------------------------------------------------------------------------------
-# Функция для открытия окна с картой палат отделения
 def osakond_aken():
+    """ Функция для открытия окна с картой палат отделения """
 
-    osakond_aken=tk.Toplevel(peamine_aken)
+    osakond_aken=tk.Toplevel(peamine_aken) 
     osakond_aken.title("Oskonna kaart")
     osakond_aken.geometry("400x500")
 
     # Отображения информации о выбранной палате
-    info_label=tk.Label(osakond_aken, text="Valige palat, et kuvada patsiendid", anchor="w", justify="left")
+    info_label=CTkLabel(osakond_aken, text="Valige palat, et kuvada patsiendid", anchor="w", justify="left", font=("Nunito", 16, "bold"))
     info_label.grid(row=2, column=0, columnspan=3, padx=10, pady=10)
 
     def naita_patsiendi_info(palati_nr):
         # Получаем список пациентов в выбранной палате
         conn=sqlite3.connect("Arvestus/AppData/haigla.db")
         cursor=conn.cursor()
-        cursor.execute('''SELECT eesnimi, perekonnanimi, isikukood 
-                          FROM patsiendid WHERE palati_nr = ?''', (palati_nr,))
+        cursor.execute("""SELECT eesnimi, perekonnanimi, isikukood 
+                          FROM patsiendid 
+                          WHERE palati_nr = ? """, (palati_nr,))
         patsiendid=cursor.fetchall()
 
         # Формируем строку для отображения информации о пациентах
@@ -671,12 +812,12 @@ def osakond_aken():
             patsiendi_info="" 
         # Проходим по каждому пациенту
             for p in patsiendid:
-                patsiendi_info=patsiendi_info+p[0]+" "+p[1]+"\n"+p[2]+"\n" # имя, фамилия, исикукод
+                patsiendi_info+="\n"+p[0]+" "+p[1]+" - "+p[2]+"\n" # имя, фамилия, исикукод
         else:
-             patsiendi_info="Ei ole patsiente selles palatis"
+             patsiendi_info="\nEi ole patsiente selles palatis"
 
         # Обновляем метку с информацией о пациентах
-        info_label.config(text=f"Palat {palati_nr}:\n{patsiendi_info}")
+        info_label.configure(text=f"Palat nr {palati_nr}:\n{patsiendi_info}", font=("Nunito", 14))
 
     rows=[0,0,0,1,1,1]  # строки для каждой палаты
     cols=[0,1,2,0,1,2]  # колонки для каждой палаты
@@ -688,26 +829,26 @@ def osakond_aken():
         # Получаем список пациентов в палате
         conn=sqlite3.connect("Arvestus/AppData/haigla.db")
         cursor=conn.cursor()
-        cursor.execute('''SELECT eesnimi, perekonnanimi, isikukood 
-                            FROM patsiendid WHERE palati_nr = ?''', (i + 1,))
+        cursor.execute("""SELECT eesnimi, perekonnanimi, isikukood 
+                            FROM patsiendid 
+                            WHERE palati_nr = ? """, (i + 1,))
         patsiendid=cursor.fetchall()
 
         # В зависимости от количества пациентов меняем цвет
         if len(patsiendid)==4:
-            varv="red"  # Палата полностью занята
+            varv="#FF3131"  # Палата полностью занята
         elif len(patsiendid)>=2:
-            varv="yellow"  # 2 или 3 пациента
+            varv="#FFFF8F"  # 2 или 3 пациента
         else:
-            varv="green"  # 1 или 0 пациента
+            varv="#50C878"  # 1 или 0 пациента
 
-        room=tk.Label(osakond_aken, text=f"PALAT NR {i+1}", bg=varv, width=15, height=6)
+        room=CTkLabel(osakond_aken, text=f"PALAT NR {i+1}", font=("Nunito", 16, "bold"), fg_color=varv, corner_radius=10, width=112, height=112)
         room.grid(row=row, column=col, padx=10, pady=10)
 
         # Привязываем обработчик событий на клик по метке
         room.bind("<Button-1>", lambda event, palati_nr=i+1: naita_patsiendi_info(palati_nr))
 
     conn.close()
-
 
 
 sisselogimine_aken()

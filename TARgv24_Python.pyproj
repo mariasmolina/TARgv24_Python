@@ -22,7 +22,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Arvestus\db_funktsioonid.py" />
+    <Compile Include="Arvestus\DB_funktsioonid.py" />
     <Compile Include="Arvestus\Isikukood_Modul.py" />
     <Compile Include="2. Tingimuslik operaator IF\2.3. Iseseisevtöö-Valiklaused %28Ruutvõrrand%29.py" />
     <Compile Include="1. Lineaarsed programmid\1.1. Tund %28Math_Random_print_input%29.py" />
@@ -63,10 +63,9 @@
     <Compile Include="Arvestus\Arvestustöö - HaiglaAssist.py" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Arvestus\AppData\haigla.db" />
-    <Content Include="Arvestus\hospital %281%29.png" />
-    <Content Include="Arvestus\hospital.png" />
-    <Content Include="Arvestus\pngwing.com.png" />
+    <Content Include="Arvestus\pildid\hospital.png" />
+    <Content Include="Arvestus\pildid\login_pilt.png" />
+    <Content Include="Arvestus\pildid\smart_id.png" />
     <Content Include="2. Tingimuslik operaator IF\2.1. Plokkskeem _Ülesanne 9 - Ruut_.pdf" />
     <Content Include="2. Tingimuslik operaator IF\2.2. Plokkskeem _Ülesanne 10 - Matemaatika_.pdf" />
     <Content Include="5. Kasutajate funktsioonid %28Def%29\Tund6_Modul.py" />
@@ -100,6 +99,7 @@
     <Folder Include="9. Töö andmebaasiga %28SQlite3%29\" />
     <Folder Include="9. Töö andmebaasiga %28SQlite3%29\AppData\" />
     <Folder Include="Arvestus\" />
+    <Folder Include="Arvestus\pildid\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
