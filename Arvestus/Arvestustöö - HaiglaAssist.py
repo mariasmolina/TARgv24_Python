@@ -125,7 +125,7 @@ def patsiendide_andmed(nimi, amet):
     peamine_aken.geometry("1200x500")
     peamine_aken.configure(background="#55b3d9")
     peamine_aken.resizable(0,0)
-    
+
     # Панель кнопок
     nupude_frame = CTkFrame(peamine_aken, width=200, fg_color="#55b3d9")
     nupude_frame.pack_propagate(0)
@@ -152,7 +152,27 @@ def patsiendide_andmed(nimi, amet):
     frame=CTkFrame(peamine_aken, fg_color="white")
     frame.pack(pady=20, side="left", expand=True, fill="both")
 
-    CTkLabel(frame, text=f"Tere, {nimi}!", font=("Nunito", 24, "bold"), fg_color="white", text_color="#55b3d9").pack(pady=20)
+    # Верхняя информационная панель
+    info_frame = CTkFrame(frame, fg_color="white", height=50)
+    info_frame.pack(fill="x")
+    
+    tanane_kuupaev=datetime.today().strftime('%d.%m.%Y')
+    
+    vasak_frame=CTkFrame(info_frame, fg_color="white")
+    vasak_frame.pack(side="left", padx=20, pady=5)
+    
+    CTkLabel(vasak_frame, text="Amet:", font=("Nunito", 16, "bold"), anchor="w", text_color="#01608b").pack(anchor="w")
+    CTkLabel(vasak_frame, text="Nimi:", font=("Nunito", 16, "bold"), anchor="w", text_color="#01608b").pack(anchor="w")
+    CTkLabel(vasak_frame, text="Kuupäev:", font=("Nunito", 16, "bold"), anchor="w", text_color="#01608b").pack(anchor="w")
+    
+    parem_frame=CTkFrame(info_frame, fg_color="white")
+    parem_frame.pack(side="left", padx=10, pady=5)
+    
+    CTkLabel(parem_frame, text=f"{amet}", font=("Nunito", 16), anchor="w", text_color="#01608b").pack(anchor="w")
+    CTkLabel(parem_frame, text=f"{nimi}", font=("Nunito", 16), anchor="w", text_color="#01608b").pack(anchor="w")
+    CTkLabel(parem_frame, text=f"{tanane_kuupaev}", font=("Nunito", 16), anchor="w", text_color="#01608b").pack(anchor="w")
+    
+    CTkLabel(info_frame, text="HailgaAssist", font=("Comfortaa", 50, "bold"), text_color="#55b3d9").pack(side="right", padx=(20,100))
     
     # Поисковая панель
     search_frame=CTkFrame(frame, fg_color="#EEEEEE")
@@ -477,7 +497,7 @@ def saada_kiri(isikukood):
         msg=EmailMessage()
         msg.set_content(kiri) 
         msg['Subject']="Koduravi ja arve"
-        msg['From']=f"LuumHaigla - Arst {nimi}"
+        msg['From']=f"Tallinna Haigla - Arst {nimi}"
         msg['To']=email  
         try:
             server=smtplib.SMTP(smtp_server,port)
